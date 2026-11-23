@@ -1,0 +1,2871 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mie Jebew Teh Encuy - Pedasnya Nampol, Harganya Anak Tongkrongan</title>
+
+    <!-- Fonts: Fredoka (Bold Display) & Nunito (Rounded Body) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@600;700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'jebew-red': '#D92B2B',
+                        'jebew-red-dark': '#B01D1D',
+                        'jebew-orange': '#FF7A00',
+                        'jebew-cream': '#FFF5E6',
+                        'jebew-cream-dark': '#F5E4CA',
+                        'jebew-black': '#1A1A1A',
+                    },
+                    fontFamily: {
+                        heading: ['Fredoka', 'sans-serif'],
+                        body: ['Nunito', 'sans-serif'],
+                    }
+                }
+            }
+        };
+    </script>
+
+    <style>
+        body {
+            font-family: 'Nunito', sans-serif;
+            background-color: #FFF5E6;
+            color: #1A1A1A;
+            overflow-x: hidden;
+        }
+        h1, h2, h3, h4, .font-heading {
+            font-family: 'Fredoka', sans-serif;
+        }
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        @keyframes floatSlow {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-7px) rotate(2deg); }
+        }
+        .animate-float {
+            animation: floatSlow 3.4s ease-in-out infinite;
+        }
+    </style>
+</head>
+<body class="bg-jebew-cream text-jebew-black antialiased selection:bg-jebew-red selection:text-white">
+
+    <!-- ==================== HEADER STICKY ==================== -->
+    <header class="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b-2 border-jebew-orange/20 shadow-sm">
+        <div class="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 h-16 sm:h-20 flex items-center justify-between gap-2">
+            <!-- Brand -->
+            <a href="#top" onclick="switchMode('buyer'); window.scrollTo({top:0, behavior:'smooth'}); return false;" class="flex items-center gap-2.5 group min-w-0">
+                <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-2xl bg-gradient-to-br from-jebew-red to-jebew-orange flex items-center justify-center text-white text-xl sm:text-2xl shadow-md shrink-0 group-hover:scale-105 transition-transform">
+                    <i class="fa-solid fa-fire-flame-curved"></i>
+                </div>
+                <div class="leading-tight truncate">
+                    <span id="navWarungName" class="font-heading text-sm sm:text-xl font-bold text-jebew-red block truncate">MIE JEBEW TEH ENCUY</span>
+                    <span class="text-[11px] sm:text-xs font-extrabold text-jebew-orange flex items-center gap-1">
+                        <i class="fa-solid fa-pepper-hot"></i> Pedasnya Nampol!
+                    </span>
+                </div>
+            </a>
+
+            <!-- Right Controls: Cart Button + [PEMBELI] & [ADMIN] -->
+            <div class="flex items-center gap-2 shrink-0">
+                <button type="button" onclick="openCartDrawer()" title="Buka Keranjang" class="relative p-2.5 sm:px-3.5 sm:py-2 rounded-2xl bg-jebew-cream hover:bg-jebew-orange/20 border-2 border-jebew-orange/30 text-jebew-black font-bold text-xs sm:text-sm flex items-center gap-1.5 transition-all">
+                    <i class="fa-solid fa-bag-shopping text-jebew-red text-base"></i>
+                    <span class="hidden md:inline">Keranjang</span>
+                    <span id="headerCartBadge" class="bg-jebew-red text-white text-[11px] font-extrabold min-w-[20px] h-5 px-1 rounded-full flex items-center justify-center">0</span>
+                </button>
+
+                <div class="flex items-center bg-jebew-cream p-1 rounded-2xl border-2 border-jebew-orange/30 shadow-inner">
+                    <button type="button" id="btnModeBuyer" onclick="switchMode('buyer')" class="px-2.5 sm:px-4 py-1.5 sm:py-2 rounded-xl font-heading text-xs sm:text-sm font-bold transition-all flex items-center gap-1 bg-jebew-red text-white shadow-md">
+                        <i class="fa-solid fa-utensils"></i>
+                        <span>PEMBELI</span>
+                    </button>
+                    <button type="button" id="btnModeAdmin" onclick="switchMode('admin')" class="px-2.5 sm:px-4 py-1.5 sm:py-2 rounded-xl font-heading text-xs sm:text-sm font-bold transition-all flex items-center gap-1 text-jebew-black hover:text-jebew-red">
+                        <i class="fa-solid fa-user-shield"></i>
+                        <span>ADMIN</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Toast Container -->
+    <div id="toastContainer" class="fixed top-20 right-4 z-50 flex flex-col gap-2 pointer-events-none max-w-xs sm:max-w-sm"></div>
+
+    <!-- ==================== MODE PEMBELI ==================== -->
+    <main id="buyerView" class="pb-24">
+
+        <!-- HERO SECTION -->
+        <section class="relative overflow-hidden bg-gradient-to-br from-jebew-cream via-[#FFE8CC] to-[#FFD5A5] pt-8 pb-14 sm:py-16 border-b-4 border-jebew-orange/20">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-center">
+                    <div class="lg:col-span-7 text-center lg:text-left space-y-5">
+                        <div class="inline-flex items-center gap-2 bg-white px-4 py-2 rounded-full shadow-sm border border-jebew-orange/30">
+                            <span class="text-yellow-400"><i class="fa-solid fa-star"></i></span>
+                            <span id="heroAvgRating" class="font-extrabold text-sm text-jebew-black">4.9</span>
+                            <span id="heroReviewCountText" class="text-xs sm:text-sm font-semibold text-gray-600">dari 500+ pelanggan</span>
+                            <span class="bg-jebew-red text-white text-[10px] font-extrabold px-2 py-0.5 rounded-full uppercase">Bogor</span>
+                        </div>
+
+                        <h1 class="font-heading text-4xl sm:text-5xl lg:text-6xl font-bold text-jebew-black leading-[1.1] tracking-tight">
+                            MIE JEBEW <span class="text-jebew-red block sm:inline">TEH ENCUY</span>
+                        </h1>
+
+                        <p class="text-lg sm:text-2xl font-extrabold text-jebew-orange">
+                            "Pedasnya Nampol, Harganya Anak Tongkrongan"
+                        </p>
+
+                        <p class="text-sm sm:text-base text-gray-700 max-w-xl mx-auto lg:mx-0 font-medium leading-relaxed">
+                            Mie kenyal berbumbu racikan &amp; <span class="font-bold text-jebew-red">Chilli Oil Homemade</span> super mantap! Dilengkapi Seblak Prasmanan, Pangsit Chilli Oil, aneka Bakar-bakaran mulai Rp 2.000, dan minuman dingin segar.
+                        </p>
+
+                        <div class="flex flex-wrap items-center justify-center lg:justify-start gap-3 sm:gap-4 pt-2">
+                            <a href="#menuSection" class="px-6 sm:px-8 py-3.5 sm:py-4 rounded-2xl bg-jebew-red hover:bg-jebew-red-dark text-white font-heading text-base sm:text-lg font-bold shadow-lg shadow-jebew-red/30 transition-all transform hover:-translate-y-0.5 flex items-center gap-2">
+                                <i class="fa-solid fa-bowl-food"></i>
+                                <span>Lihat Menu</span>
+                            </a>
+                            <button type="button" onclick="openCartDrawer()" class="px-6 sm:px-8 py-3.5 sm:py-4 rounded-2xl bg-jebew-black hover:bg-gray-800 text-white font-heading text-base sm:text-lg font-bold shadow-lg transition-all transform hover:-translate-y-0.5 flex items-center gap-2">
+                                <i class="fa-solid fa-bag-shopping text-jebew-orange"></i>
+                                <span>Pesan Sekarang</span>
+                            </button>
+                        </div>
+
+                        <div class="pt-2 flex flex-wrap items-center justify-center lg:justify-start gap-3 text-xs sm:text-sm font-bold text-gray-700">
+                            <span class="flex items-center gap-1.5 bg-white/85 px-3 py-1.5 rounded-xl">
+                                <i class="fa-solid fa-clock text-jebew-red"></i>
+                                <span id="heroHours">Setiap Hari 11.00 - 21.00 WIB (sampai habis)</span>
+                            </span>
+                            <span class="flex items-center gap-1.5 bg-white/85 px-3 py-1.5 rounded-xl">
+                                <i class="fa-solid fa-location-dot text-jebew-orange"></i>
+                                <span>Gg. Kangkung, Bogor</span>
+                            </span>
+                        </div>
+                    </div>
+
+                    <!-- Hero Food Visual -->
+                    <div class="lg:col-span-5 relative">
+                        <div class="relative mx-auto max-w-md lg:max-w-full">
+                            <div class="relative rounded-3xl overflow-hidden border-4 border-white shadow-2xl bg-jebew-black aspect-[4/3] sm:aspect-square">
+                                <img src="https://images.unsplash.com/photo-1569718212165-3a8278d5f624?auto=format&fit=crop&w=900&q=85"
+                                     onerror="this.src='https://placehold.co/600x600/D92B2B/FFF5E6?text=Mie+Jebew+Teh+Encuy'"
+                                     alt="Mie Jebew Pedas Chilli Oil"
+                                     class="w-full h-full object-cover hover:scale-105 transition-transform duration-500">
+                                <div class="absolute inset-0 bg-gradient-to-t from-black/75 via-transparent to-transparent"></div>
+                                <div class="absolute bottom-4 left-4 right-4 text-white">
+                                    <span class="inline-block bg-jebew-orange text-jebew-black font-extrabold text-xs px-3 py-1 rounded-full mb-1">
+                                        🔥 MENU FAVORIT #1
+                                    </span>
+                                    <p class="font-heading text-xl sm:text-2xl font-bold">Mie Jebew Chilli Oil</p>
+                                    <p class="text-xs sm:text-sm text-gray-200">Level Pedas 1 - 5 • Mulai Rp 7.000</p>
+                                </div>
+                            </div>
+
+                            <div class="animate-float absolute -top-4 -right-2 sm:-right-4 bg-jebew-red text-white px-4 py-2.5 rounded-2xl shadow-xl border-2 border-white transform rotate-6">
+                                <div class="flex items-center gap-1.5 font-heading font-bold text-sm sm:text-base">
+                                    <i class="fa-solid fa-fire text-yellow-300"></i>
+                                    <span>BEST SELLER!</span>
+                                </div>
+                            </div>
+
+                            <div class="absolute -bottom-4 -left-2 sm:-left-4 bg-white text-jebew-black px-4 py-2.5 rounded-2xl shadow-xl border-2 border-jebew-orange transform -rotate-3">
+                                <div class="flex items-center gap-2">
+                                    <span class="text-2xl">🌶️</span>
+                                    <div class="leading-tight">
+                                        <p class="font-heading font-bold text-xs sm:text-sm text-jebew-red">Chilli Oil Asli</p>
+                                        <p class="text-[11px] font-bold text-gray-600">Gurih &amp; Nampol!</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PROMO BANNER -->
+        <section id="inlinePromoBanner" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-6 relative z-10">
+            <div class="bg-gradient-to-r from-jebew-red via-[#E33434] to-jebew-orange rounded-3xl p-4 sm:p-6 text-white shadow-xl border-2 border-white flex flex-col sm:flex-row items-center justify-between gap-4">
+                <div class="flex items-center gap-3 sm:gap-4 text-center sm:text-left">
+                    <div class="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-white/20 backdrop-blur-sm flex items-center justify-center text-2xl sm:text-3xl shrink-0">
+                        🎁
+                    </div>
+                    <div>
+                        <span id="inlinePromoBadge" class="inline-block bg-yellow-300 text-jebew-black font-extrabold text-[10px] sm:text-xs px-2.5 py-0.5 rounded-full uppercase tracking-wider mb-1">
+                            PROMO SPESIAL HARI INI
+                        </span>
+                        <h2 id="inlinePromoTitle" class="font-heading text-lg sm:text-2xl font-bold leading-tight">
+                            Beli 2 Mie Jebew Gratis 1 Minuman
+                        </h2>
+                        <p id="inlinePromoDesc" class="text-xs sm:text-sm text-white/90 font-medium">
+                            Berlaku untuk pembelian 2 porsi Mie Jebew, langsung gratis 1 Es Teh Manis!
+                        </p>
+                    </div>
+                </div>
+                <div class="flex items-center gap-2 shrink-0">
+                    <button type="button" onclick="openPromoPopup()" class="bg-white/20 hover:bg-white/30 text-white font-bold text-xs px-3.5 py-2.5 rounded-xl transition-colors">
+                        Detail Pop-up
+                    </button>
+                    <a href="#menuSection" class="bg-white text-jebew-red hover:bg-jebew-cream font-heading font-bold text-sm px-5 py-2.5 rounded-xl shadow-md transition-colors">
+                        Pesan <i class="fa-solid fa-arrow-right ml-1"></i>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== DAFTAR MENU ==================== -->
+        <section id="menuSection" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-12 sm:pt-16">
+            <div class="text-center max-w-2xl mx-auto mb-8">
+                <span class="inline-block bg-jebew-orange/15 text-jebew-red font-extrabold text-xs px-3.5 py-1 rounded-full uppercase tracking-wider mb-2">
+                    <i class="fa-solid fa-fire mr-1"></i> Daftar Menu Warung
+                </span>
+                <h2 class="font-heading text-3xl sm:text-4xl font-bold text-jebew-black">
+                    Pilih Menu Favoritmu!
+                </h2>
+                <p class="text-sm sm:text-base text-gray-600 mt-1 font-medium">
+                    Klik <span class="font-bold text-jebew-red">+ Pesan</span> untuk pilih level pedas, topping seblak prasmanan, topping tambahan, atau bumbu bakaran.
+                </p>
+            </div>
+
+            <!-- Search & Category Filter -->
+            <div class="bg-white p-4 sm:p-5 rounded-3xl shadow-md border border-jebew-orange/20 mb-8 space-y-4">
+                <div class="relative">
+                    <i class="fa-solid fa-magnifying-glass absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"></i>
+                    <input type="text" id="menuSearchInput" oninput="renderBuyerMenu()" placeholder="Cari menu... (contoh: Mie Jebew, Pangsit, Seblak, Sosis, Es Teh)"
+                           class="w-full pl-11 pr-10 py-3 sm:py-3.5 rounded-2xl bg-jebew-cream/60 border-2 border-transparent focus:border-jebew-orange focus:bg-white outline-none font-semibold text-sm sm:text-base transition-all">
+                    <button type="button" id="clearSearchBtn" onclick="clearSearch()" class="hidden absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-jebew-red p-1">
+                        <i class="fa-solid fa-circle-xmark"></i>
+                    </button>
+                </div>
+
+                <div id="categoryFilterBar" class="flex items-center gap-2 overflow-x-auto no-scrollbar pb-1">
+                    <!-- Rendered dynamically -->
+                </div>
+            </div>
+
+            <!-- Menu Grid -->
+            <div id="menuGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 sm:gap-6">
+                <!-- Rendered dynamically -->
+            </div>
+
+            <!-- Empty State -->
+            <div id="emptyMenuState" class="hidden text-center py-14 bg-white rounded-3xl border-2 border-dashed border-jebew-orange/30">
+                <div class="text-5xl mb-3">🍜</div>
+                <h3 class="font-heading text-xl font-bold text-jebew-black">Menu Tidak Ditemukan</h3>
+                <p class="text-sm text-gray-500 mt-1">Coba kata kunci lain atau pilih kategori "Semua".</p>
+                <button type="button" onclick="resetMenuFilter()" class="mt-4 px-5 py-2.5 rounded-xl bg-jebew-orange text-white font-bold text-sm hover:bg-jebew-red transition-colors">
+                    Tampilkan Semua Menu
+                </button>
+            </div>
+        </section>
+
+        <!-- ==================== TENTANG WARUNG ==================== -->
+        <section id="aboutSection" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-16 sm:pt-24">
+            <div class="bg-white rounded-3xl p-6 sm:p-10 lg:p-12 shadow-lg border border-jebew-orange/20 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                <div class="lg:col-span-5">
+                    <div class="relative rounded-3xl overflow-hidden shadow-xl aspect-[4/3]">
+                        <img src="https://images.unsplash.com/photo-1585032226651-759b368d7246?auto=format&fit=crop&w=800&q=80"
+                             onerror="this.src='https://placehold.co/600x450/FF7A00/FFFFFF?text=Dapur+Teh+Encuy'"
+                             alt="Rahasia Chilli Oil Teh Encuy" class="w-full h-full object-cover">
+                        <div class="absolute bottom-3 left-3 bg-jebew-black/85 text-white px-4 py-2 rounded-2xl text-xs font-bold">
+                            🔥 Chilli Oil Racikan Rumahan Teh Encuy
+                        </div>
+                    </div>
+                </div>
+                <div class="lg:col-span-7 space-y-4">
+                    <span class="inline-block bg-jebew-red/10 text-jebew-red font-extrabold text-xs px-3.5 py-1 rounded-full uppercase">
+                        Tentang Warung
+                    </span>
+                    <h2 class="font-heading text-2xl sm:text-4xl font-bold text-jebew-black leading-tight">
+                        Cerita Teh Encuy &amp; Rahasia Pedas Nampolnya
+                    </h2>
+                    <p class="text-gray-700 text-sm sm:text-base leading-relaxed font-medium">
+                        Dari dapur hangat di <span class="font-bold text-jebew-black">Gg. Kangkung, Bogor</span>, Teh Encuy meracik <span class="font-bold text-jebew-red">Chilli Oil</span> khas yang dimasak perlahan dengan bawang, rempah pilihan, dan cabai segar agar pedasnya tidak sekadar menyengat, melainkan gurih meresap sampai ke suapan terakhir.
+                    </p>
+                    <p class="text-gray-700 text-sm sm:text-base leading-relaxed font-medium">
+                        Semua menu diracik dengan harga bersahabat untuk anak tongkrongan, pelajar, dan keluarga—mulai dari Rp 2.000-an untuk bakaran, Seblak Prasmanan sesuai selera, hingga Mie Jebew level 1 sampai 5.
+                    </p>
+                    <div class="grid grid-cols-3 gap-3 pt-2">
+                        <div class="bg-jebew-cream p-3 sm:p-4 rounded-2xl text-center">
+                            <p class="font-heading text-xl sm:text-2xl font-bold text-jebew-red">Level 1-5</p>
+                            <p class="text-xs font-bold text-gray-600">Pilihan Pedas</p>
+                        </div>
+                        <div class="bg-jebew-cream p-3 sm:p-4 rounded-2xl text-center">
+                            <p class="font-heading text-xl sm:text-2xl font-bold text-jebew-orange">Fresh</p>
+                            <p class="text-xs font-bold text-gray-600">Dimasak Saat Pesan</p>
+                        </div>
+                        <div class="bg-jebew-cream p-3 sm:p-4 rounded-2xl text-center">
+                            <p class="font-heading text-xl sm:text-2xl font-bold text-jebew-black">Rp 2rb+</p>
+                            <p class="text-xs font-bold text-gray-600">Harga Tongkrongan</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== TESTIMONI & ULASAN PEMBELI ==================== -->
+        <section id="testimonialSection" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-16 sm:pt-20">
+            <div class="text-center max-w-2xl mx-auto mb-8">
+                <span class="inline-block bg-jebew-orange/15 text-jebew-orange font-extrabold text-xs px-3.5 py-1 rounded-full uppercase mb-2">
+                    ⭐ Testimoni &amp; Ulasan Pembeli
+                </span>
+                <h2 class="font-heading text-3xl sm:text-4xl font-bold text-jebew-black">
+                    Apa Kata Mereka Tentang Teh Encuy?
+                </h2>
+                <p class="text-sm sm:text-base text-gray-600 mt-1 font-medium">
+                    Baca ulasan pembeli atau tulis ulasanmu sendiri setelah mencicipi!
+                </p>
+
+                <div class="mt-4 flex flex-wrap items-center justify-center gap-3">
+                    <div class="inline-flex items-center gap-2 bg-white px-4 py-2 rounded-2xl shadow-sm border border-jebew-orange/25">
+                        <span class="text-yellow-400"><i class="fa-solid fa-star"></i></span>
+                        <span id="sectionAvgRating" class="font-heading font-bold text-base text-jebew-black">5.0</span>
+                        <span id="sectionReviewTotal" class="text-xs font-bold text-gray-500">(4 ulasan)</span>
+                    </div>
+                    <button type="button" onclick="toggleBuyerReviewForm()" class="px-5 py-2.5 rounded-2xl bg-jebew-red hover:bg-jebew-red-dark text-white font-heading font-bold text-sm shadow-md transition-all flex items-center gap-2">
+                        <i class="fa-solid fa-pen-to-square"></i>
+                        <span>Tulis Ulasan</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Form Tambah Ulasan Pembeli -->
+            <div id="buyerReviewFormBox" class="hidden max-w-2xl mx-auto mb-10 bg-white p-6 sm:p-7 rounded-3xl shadow-xl border-2 border-jebew-orange/30">
+                <div class="flex items-center justify-between mb-4">
+                    <div>
+                        <h3 class="font-heading text-xl font-bold text-jebew-black">Tulis Ulasan Pembeli</h3>
+                        <p class="text-xs text-gray-500">Isi nama, pilih rating bintang 1-5, dan tulis ulasanmu.</p>
+                    </div>
+                    <button type="button" onclick="toggleBuyerReviewForm()" class="w-8 h-8 rounded-full bg-gray-100 hover:bg-jebew-red hover:text-white flex items-center justify-center text-gray-500 transition-colors">
+                        <i class="fa-solid fa-xmark"></i>
+                    </button>
+                </div>
+
+                <form onsubmit="handleBuyerSubmitReview(event)" class="space-y-4">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-xs font-extrabold text-gray-700 uppercase mb-1">Nama Pembeli <span class="text-jebew-red">*</span></label>
+                            <input type="text" id="buyerRevName" required placeholder="Contoh: Rina Putri" class="w-full px-4 py-2.5 rounded-2xl bg-jebew-cream/60 border-2 border-gray-200 focus:border-jebew-red focus:bg-white outline-none text-sm font-bold">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-extrabold text-gray-700 uppercase mb-1">Menu yang Dipesan (Opsional)</label>
+                            <input type="text" id="buyerRevMenu" placeholder="Contoh: Mie Jebew Level 3" class="w-full px-4 py-2.5 rounded-2xl bg-jebew-cream/60 border-2 border-gray-200 focus:border-jebew-red focus:bg-white outline-none text-sm font-bold">
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-extrabold text-gray-700 uppercase mb-1.5">Rating Bintang (1 - 5) <span class="text-jebew-red">*</span></label>
+                        <input type="hidden" id="buyerRevRating" value="5">
+                        <div class="flex flex-wrap items-center gap-2 bg-jebew-cream/60 p-3 rounded-2xl border border-jebew-orange/20" id="buyerStarPicker">
+                            <button type="button" onclick="setBuyerRating(1)" data-star="1" class="star-pick-btn text-2xl text-yellow-400 hover:scale-110 transition-transform"><i class="fa-solid fa-star"></i></button>
+                            <button type="button" onclick="setBuyerRating(2)" data-star="2" class="star-pick-btn text-2xl text-yellow-400 hover:scale-110 transition-transform"><i class="fa-solid fa-star"></i></button>
+                            <button type="button" onclick="setBuyerRating(3)" data-star="3" class="star-pick-btn text-2xl text-yellow-400 hover:scale-110 transition-transform"><i class="fa-solid fa-star"></i></button>
+                            <button type="button" onclick="setBuyerRating(4)" data-star="4" class="star-pick-btn text-2xl text-yellow-400 hover:scale-110 transition-transform"><i class="fa-solid fa-star"></i></button>
+                            <button type="button" onclick="setBuyerRating(5)" data-star="5" class="star-pick-btn text-2xl text-yellow-400 hover:scale-110 transition-transform"><i class="fa-solid fa-star"></i></button>
+                            <span id="buyerRatingLabel" class="ml-2 text-xs font-extrabold text-jebew-black">5 / 5 - Pedas Nampol!</span>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-extrabold text-gray-700 uppercase mb-1">Ulasan Kamu <span class="text-jebew-red">*</span></label>
+                        <textarea id="buyerRevText" rows="3" required placeholder="Ceritakan rasa pedasnya, porsinya, atau pelayanannya..." class="w-full px-4 py-2.5 rounded-2xl bg-jebew-cream/60 border-2 border-gray-200 focus:border-jebew-red focus:bg-white outline-none text-sm font-bold"></textarea>
+                    </div>
+
+                    <div class="flex justify-end gap-2.5 pt-1">
+                        <button type="button" onclick="toggleBuyerReviewForm()" class="px-5 py-2.5 rounded-2xl bg-gray-100 hover:bg-gray-200 text-gray-700 font-bold text-sm">Batal</button>
+                        <button type="submit" class="px-6 py-2.5 rounded-2xl bg-jebew-red hover:bg-jebew-red-dark text-white font-heading font-bold text-sm shadow-md">
+                            <i class="fa-solid fa-paper-plane mr-1"></i> Kirim Ulasan
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <div id="testimonialsGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+                <!-- Rendered dynamically -->
+            </div>
+        </section>
+
+        <!-- ==================== LOKASI & JAM BUKA ==================== -->
+        <section id="locationSection" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-16 sm:pt-20">
+            <div class="bg-white rounded-3xl overflow-hidden shadow-lg border border-jebew-orange/20 grid grid-cols-1 lg:grid-cols-12">
+                <div class="lg:col-span-5 p-6 sm:p-8 lg:p-10 flex flex-col justify-between space-y-6 bg-gradient-to-b from-white to-jebew-cream/50">
+                    <div class="space-y-4">
+                        <span class="inline-block bg-jebew-red text-white font-extrabold text-xs px-3.5 py-1 rounded-full uppercase">
+                            <i class="fa-solid fa-map-pin mr-1"></i> Lokasi Warung
+                        </span>
+                        <h2 class="font-heading text-2xl sm:text-3xl font-bold text-jebew-black">
+                            Mampir ke Warung Teh Encuy
+                        </h2>
+                        <p class="text-sm text-gray-600 font-medium">
+                            Koordinat: <span class="font-bold text-jebew-black">-6.503943, 106.745766</span>. Bisa makan di tempat, dibungkus, atau delivery.
+                        </p>
+
+                        <div class="space-y-3 pt-2">
+                            <div class="flex items-start gap-3">
+                                <div class="w-10 h-10 rounded-xl bg-jebew-red/10 text-jebew-red flex items-center justify-center shrink-0 mt-0.5">
+                                    <i class="fa-solid fa-location-dot text-lg"></i>
+                                </div>
+                                <div>
+                                    <p class="font-bold text-sm text-jebew-black">Alamat</p>
+                                    <p id="locAddressText" class="text-sm text-gray-600">Gg. Kangkung, Bogor Kabupaten, Jawa Barat, Indonesia</p>
+                                </div>
+                            </div>
+
+                            <div class="flex items-start gap-3">
+                                <div class="w-10 h-10 rounded-xl bg-jebew-orange/15 text-jebew-orange flex items-center justify-center shrink-0 mt-0.5">
+                                    <i class="fa-solid fa-clock text-lg"></i>
+                                </div>
+                                <div>
+                                    <p class="font-bold text-sm text-jebew-black">Jam Buka</p>
+                                    <p id="locHoursText" class="text-sm text-gray-600">Setiap Hari 11.00 - 21.00 WIB (sampai habis)</p>
+                                </div>
+                            </div>
+
+                            <div class="flex items-start gap-3">
+                                <div class="w-10 h-10 rounded-xl bg-green-100 text-green-600 flex items-center justify-center shrink-0 mt-0.5">
+                                    <i class="fa-brands fa-whatsapp text-xl"></i>
+                                </div>
+                                <div>
+                                    <p class="font-bold text-sm text-jebew-black">WhatsApp Admin</p>
+                                    <p id="locWaText" class="text-sm text-gray-600 font-bold">089635938859</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="pt-2 flex flex-col sm:flex-row gap-3">
+                        <a id="btnDirections" href="https://www.google.com/maps/search/?api=1&query=-6.503943,106.745766" target="_blank" rel="noopener noreferrer"
+                           class="flex-1 py-3.5 px-5 rounded-2xl bg-jebew-red hover:bg-jebew-red-dark text-white font-heading font-bold text-sm sm:text-base text-center shadow-md transition-all flex items-center justify-center gap-2">
+                            <i class="fa-solid fa-diamond-turn-right"></i>
+                            <span>Petunjuk Arah</span>
+                        </a>
+                        <a id="btnDirectWa" href="https://wa.me/6289635938859" target="_blank" rel="noopener noreferrer"
+                           class="py-3.5 px-5 rounded-2xl bg-green-600 hover:bg-green-700 text-white font-heading font-bold text-sm sm:text-base text-center shadow-md transition-all flex items-center justify-center gap-2">
+                            <i class="fa-brands fa-whatsapp text-lg"></i>
+                            <span>Chat WA</span>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="lg:col-span-7 min-h-[320px] sm:min-h-[400px] bg-gray-200 relative">
+                    <iframe
+                        src="https://maps.google.com/maps?q=-6.503943,106.745766&hl=id&z=16&output=embed"
+                        class="w-full h-full border-0 min-h-[320px] sm:min-h-[400px]"
+                        allowfullscreen=""
+                        loading="lazy"
+                        referrerpolicy="no-referrer-when-downgrade">
+                    </iframe>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== FOOTER ==================== -->
+        <footer class="mt-16 bg-jebew-black text-white pt-12 pb-24 sm:pb-14 border-t-4 border-jebew-red">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 pb-8 border-b border-white/10">
+                    <div class="space-y-3">
+                        <div class="flex items-center gap-2.5">
+                            <div class="w-10 h-10 rounded-xl bg-jebew-red flex items-center justify-center text-white text-xl">
+                                <i class="fa-solid fa-fire-flame-curved"></i>
+                            </div>
+                            <span id="footerWarungName" class="font-heading text-xl font-bold text-white">MIE JEBEW TEH ENCUY</span>
+                        </div>
+                        <p class="text-sm text-gray-400 leading-relaxed">
+                            Pedasnya Nampol, Harganya Anak Tongkrongan. Mie Jebew, Pangsit Chilli Oil, Seblak Prasmanan, Bakar-bakaran, dan Minuman Segar.
+                        </p>
+                    </div>
+
+                    <div class="space-y-2.5">
+                        <h3 class="font-heading text-lg font-bold text-jebew-orange">Info Warung</h3>
+                        <p class="text-sm text-gray-300 flex items-start gap-2">
+                            <i class="fa-solid fa-location-dot text-jebew-red mt-1"></i>
+                            <span id="footerAddress">Gg. Kangkung, Bogor Kabupaten, Jawa Barat, Indonesia</span>
+                        </p>
+                        <p class="text-sm text-gray-300 flex items-center gap-2">
+                            <i class="fa-solid fa-clock text-jebew-orange"></i>
+                            <span id="footerHours">Setiap Hari 11.00 - 21.00 WIB (sampai habis)</span>
+                        </p>
+                        <p class="text-sm text-gray-300 flex items-center gap-2">
+                            <i class="fa-brands fa-whatsapp text-green-400"></i>
+                            <span id="footerWa">089635938859</span>
+                        </p>
+                    </div>
+
+                    <div class="space-y-3">
+                        <h3 class="font-heading text-lg font-bold text-jebew-orange">Sosial Media</h3>
+                        <p class="text-sm text-gray-400">Follow update harian, menu spesial, dan promo seru:</p>
+                        <div class="flex flex-wrap gap-3">
+                            <a id="footerIgLink" href="https://instagram.com/mie_jebew_teh_encuy" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 bg-white/10 hover:bg-jebew-red px-4 py-2.5 rounded-xl text-sm font-bold transition-colors">
+                                <i class="fa-brands fa-instagram text-lg"></i>
+                                <span id="footerSocialText">@mie_jebew_teh_encuy</span>
+                            </a>
+                            <a id="footerTiktokLink" href="https://tiktok.com/@mie_jebew_teh_encuy" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 bg-white/10 hover:bg-jebew-orange px-4 py-2.5 rounded-xl text-sm font-bold transition-colors">
+                                <i class="fa-brands fa-tiktok text-base"></i>
+                                <span>TikTok</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="pt-6 text-center text-xs text-gray-500">
+                    &copy; <span id="currentYear"></span> <span id="footerCopyName">Mie Jebew Teh Encuy</span>. Semua hak cipta dilindungi.
+                </div>
+            </div>
+        </footer>
+
+        <!-- Floating Cart Bar -->
+        <div id="floatingCartBar" class="hidden fixed bottom-4 left-4 right-20 sm:left-auto sm:right-24 sm:w-96 z-30">
+            <button type="button" onclick="openCartDrawer()" class="w-full bg-jebew-red hover:bg-jebew-red-dark text-white p-3.5 sm:p-4 rounded-2xl shadow-2xl border-2 border-white flex items-center justify-between transition-transform active:scale-95">
+                <div class="flex items-center gap-3">
+                    <div class="relative bg-white text-jebew-red w-10 h-10 rounded-xl flex items-center justify-center font-heading font-bold text-lg">
+                        <i class="fa-solid fa-basket-shopping"></i>
+                        <span id="cartBadgeCount" class="absolute -top-2 -right-2 bg-jebew-black text-white text-xs w-5 h-5 rounded-full flex items-center justify-center font-bold">0</span>
+                    </div>
+                    <div class="text-left">
+                        <p class="text-[11px] font-bold text-white/90 uppercase">Keranjang Pesanan</p>
+                        <p id="cartBarTotal" class="font-heading text-base sm:text-lg font-bold leading-tight">Rp 0</p>
+                    </div>
+                </div>
+                <span class="bg-white/20 px-3 py-1.5 rounded-xl font-heading font-bold text-xs sm:text-sm flex items-center gap-1">
+                    Checkout <i class="fa-solid fa-chevron-right"></i>
+                </span>
+            </button>
+        </div>
+
+        <!-- Floating WhatsApp Button -->
+        <a id="floatingWaBtn" href="https://wa.me/6289635938859" target="_blank" rel="noopener noreferrer"
+           title="Chat WhatsApp Admin"
+           class="fixed bottom-4 right-4 z-30 w-14 h-14 rounded-full bg-green-500 hover:bg-green-600 text-white shadow-2xl border-2 border-white flex items-center justify-center text-3xl transition-transform hover:scale-110 active:scale-95">
+            <i class="fa-brands fa-whatsapp"></i>
+        </a>
+
+    </main>
+
+    <!-- ==================== MODE ADMIN ==================== -->
+    <section id="adminView" class="hidden min-h-[calc(100vh-5rem)] pb-16">
+
+        <!-- Login Form -->
+        <div id="adminLoginScreen" class="max-w-md mx-auto px-4 pt-12 sm:pt-20">
+            <div class="bg-white rounded-3xl p-6 sm:p-8 shadow-xl border-2 border-jebew-orange/20">
+                <div class="text-center mb-6">
+                    <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-jebew-red to-jebew-orange text-white text-3xl flex items-center justify-center mx-auto mb-3 shadow-lg">
+                        <i class="fa-solid fa-lock"></i>
+                    </div>
+                    <h2 class="font-heading text-2xl font-bold text-jebew-black">Login Admin</h2>
+                    <p class="text-sm text-gray-500 mt-1">Khusus pengelola Mie Jebew Teh Encuy</p>
+                </div>
+
+                <div id="loginErrorBox" class="hidden mb-4 p-3.5 rounded-2xl bg-red-50 border-2 border-jebew-red text-jebew-red text-sm font-bold flex items-center gap-2">
+                    <i class="fa-solid fa-circle-exclamation text-lg"></i>
+                    <span>Username atau Password Salah</span>
+                </div>
+
+                <form onsubmit="handleAdminLogin(event)" class="space-y-4">
+                    <div>
+                        <label class="block text-xs font-extrabold text-gray-700 uppercase mb-1.5">Username</label>
+                        <div class="relative">
+                            <i class="fa-solid fa-user absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"></i>
+                            <input type="text" id="adminUsernameInput" required placeholder="Masukkan username"
+                                   class="w-full pl-11 pr-4 py-3 rounded-2xl bg-jebew-cream/60 border-2 border-gray-200 focus:border-jebew-red focus:bg-white outline-none font-bold text-sm">
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-extrabold text-gray-700 uppercase mb-1.5">Password</label>
+                        <div class="relative">
+                            <i class="fa-solid fa-key absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"></i>
+                            <input type="password" id="adminPasswordInput" required placeholder="Masukkan password"
+                                   class="w-full pl-11 pr-11 py-3 rounded-2xl bg-jebew-cream/60 border-2 border-gray-200 focus:border-jebew-red focus:bg-white outline-none font-bold text-sm">
+                            <button type="button" onclick="togglePasswordVisibility()" class="absolute right-3.5 top-1/2 -translate-y-1/2 text-gray-400 hover:text-jebew-black">
+                                <i id="eyeIcon" class="fa-solid fa-eye"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="w-full py-3.5 rounded-2xl bg-jebew-red hover:bg-jebew-red-dark text-white font-heading font-bold text-base shadow-lg shadow-jebew-red/30 transition-all">
+                        Masuk Dashboard <i class="fa-solid fa-right-to-bracket ml-1"></i>
+                    </button>
+                </form>
+
+                <div class="mt-6 pt-4 border-t border-gray-100 text-center">
+                    <button type="button" onclick="switchMode('buyer')" class="text-xs font-bold text-gray-500 hover:text-jebew-red">
+                        <i class="fa-solid fa-arrow-left mr-1"></i> Kembali ke Mode Pembeli
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Dashboard Admin -->
+        <div id="adminDashboardScreen" class="hidden max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 sm:pt-8">
+            <div class="bg-jebew-black text-white rounded-3xl p-5 sm:p-6 mb-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 shadow-lg">
+                <div>
+                    <div class="flex items-center gap-2">
+                        <span class="bg-jebew-orange text-jebew-black text-xs font-extrabold px-2.5 py-0.5 rounded-full">DASHBOARD ADMIN</span>
+                        <span class="text-xs text-green-400 font-bold"><i class="fa-solid fa-circle text-[8px] mr-1"></i>Tersimpan Permanen</span>
+                    </div>
+                    <h1 class="font-heading text-2xl sm:text-3xl font-bold mt-1">Kelola Warung Mie Jebew Teh Encuy</h1>
+                </div>
+                <div class="flex items-center gap-2.5 w-full sm:w-auto">
+                    <button type="button" onclick="switchMode('buyer')" class="flex-1 sm:flex-none px-4 py-2.5 rounded-xl bg-white/10 hover:bg-white/20 text-white font-bold text-xs sm:text-sm transition-colors">
+                        <i class="fa-solid fa-eye mr-1"></i> Mode Pembeli
+                    </button>
+                    <button type="button" onclick="handleAdminLogout()" class="flex-1 sm:flex-none px-4 py-2.5 rounded-xl bg-jebew-red hover:bg-jebew-red-dark text-white font-bold text-xs sm:text-sm transition-colors">
+                        <i class="fa-solid fa-right-from-bracket mr-1"></i> Logout
+                    </button>
+                </div>
+            </div>
+
+            <!-- Admin Tabs -->
+            <div class="flex items-center gap-2 overflow-x-auto no-scrollbar pb-3 mb-6">
+                <button type="button" onclick="switchAdminTab('overview')" id="tabBtn-overview" class="admin-tab-btn shrink-0 px-4 py-2.5 rounded-2xl font-heading font-bold text-sm bg-jebew-red text-white shadow-md">
+                    <i class="fa-solid fa-chart-pie mr-1.5"></i> Ringkasan
+                </button>
+                <button type="button" onclick="switchAdminTab('menus')" id="tabBtn-menus" class="admin-tab-btn shrink-0 px-4 py-2.5 rounded-2xl font-heading font-bold text-sm bg-white text-jebew-black hover:bg-jebew-orange/10">
+                    <i class="fa-solid fa-utensils mr-1.5"></i> Kelola Menu
+                </button>
+                <button type="button" onclick="switchAdminTab('toppings')" id="tabBtn-toppings" class="admin-tab-btn shrink-0 px-4 py-2.5 rounded-2xl font-heading font-bold text-sm bg-white text-jebew-black hover:bg-jebew-orange/10">
+                    <i class="fa-solid fa-cubes-stacked mr-1.5"></i> Kelola Topping
+                </button>
+                <button type="button" onclick="switchAdminTab('categories')" id="tabBtn-categories" class="admin-tab-btn shrink-0 px-4 py-2.5 rounded-2xl font-heading font-bold text-sm bg-white text-jebew-black hover:bg-jebew-orange/10">
+                    <i class="fa-solid fa-tags mr-1.5"></i> Kelola Kategori
+                </button>
+                <button type="button" onclick="switchAdminTab('promo')" id="tabBtn-promo" class="admin-tab-btn shrink-0 px-4 py-2.5 rounded-2xl font-heading font-bold text-sm bg-white text-jebew-black hover:bg-jebew-orange/10">
+                    <i class="fa-solid fa-gift mr-1.5"></i> Kelola Promo
+                </button>
+                <button type="button" onclick="switchAdminTab('testimonials')" id="tabBtn-testimonials" class="admin-tab-btn shrink-0 px-4 py-2.5 rounded-2xl font-heading font-bold text-sm bg-white text-jebew-black hover:bg-jebew-orange/10">
+                    <i class="fa-solid fa-star mr-1.5"></i> Kelola Testimoni
+                </button>
+                <button type="button" onclick="switchAdminTab('settings')" id="tabBtn-settings" class="admin-tab-btn shrink-0 px-4 py-2.5 rounded-2xl font-heading font-bold text-sm bg-white text-jebew-black hover:bg-jebew-orange/10">
+                    <i class="fa-solid fa-store mr-1.5"></i> Info Warung &amp; Akun
+                </button>
+            </div>
+
+            <!-- TAB 1: RINGKASAN -->
+            <div id="adminTab-overview" class="admin-tab-content space-y-6">
+                <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+                    <div class="bg-white p-5 rounded-3xl shadow-sm border border-jebew-orange/20">
+                        <div class="w-11 h-11 rounded-2xl bg-jebew-orange/15 text-jebew-orange flex items-center justify-center text-xl mb-3">
+                            <i class="fa-solid fa-bowl-food"></i>
+                        </div>
+                        <p class="text-xs font-extrabold text-gray-500 uppercase">Total Menu</p>
+                        <p id="statTotalMenu" class="font-heading text-3xl font-bold text-jebew-black mt-0.5">0</p>
+                    </div>
+                    <div class="bg-white p-5 rounded-3xl shadow-sm border border-jebew-orange/20">
+                        <div class="w-11 h-11 rounded-2xl bg-blue-100 text-blue-600 flex items-center justify-center text-xl mb-3">
+                            <i class="fa-solid fa-layer-group"></i>
+                        </div>
+                        <p class="text-xs font-extrabold text-gray-500 uppercase">Total Kategori</p>
+                        <p id="statTotalCategory" class="font-heading text-3xl font-bold text-jebew-black mt-0.5">0</p>
+                    </div>
+                    <div class="bg-white p-5 rounded-3xl shadow-sm border border-jebew-orange/20">
+                        <div class="w-11 h-11 rounded-2xl bg-yellow-100 text-yellow-600 flex items-center justify-center text-xl mb-3">
+                            <i class="fa-solid fa-fire"></i>
+                        </div>
+                        <p class="text-xs font-extrabold text-gray-500 uppercase">Menu Terlaris</p>
+                        <p id="statBestSeller" class="font-heading text-lg font-bold text-jebew-red mt-1 truncate">Mie Jebew</p>
+                    </div>
+                    <div class="bg-white p-5 rounded-3xl shadow-sm border border-jebew-orange/20">
+                        <div class="w-11 h-11 rounded-2xl bg-red-100 text-jebew-red flex items-center justify-center text-xl mb-3">
+                            <i class="fa-solid fa-circle-xmark"></i>
+                        </div>
+                        <p class="text-xs font-extrabold text-gray-500 uppercase">Menu Habis</p>
+                        <p id="statOutOfStock" class="font-heading text-3xl font-bold text-jebew-red mt-0.5">0</p>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-3xl p-5 sm:p-6 shadow-sm border border-jebew-orange/20">
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="font-heading text-xl font-bold text-jebew-black">Toggle Cepat Tersedia / Habis</h3>
+                        <button type="button" onclick="switchAdminTab('menus')" class="text-xs font-bold text-jebew-red hover:underline">Kelola Lengkap &rarr;</button>
+                    </div>
+                    <div id="quickStockList" class="divide-y divide-gray-100"></div>
+                </div>
+            </div>
+
+            <!-- TAB 2: KELOLA MENU -->
+            <div id="adminTab-menus" class="admin-tab-content hidden space-y-6">
+                <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 bg-white p-5 rounded-3xl shadow-sm border border-jebew-orange/20">
+                    <div>
+                        <h3 class="font-heading text-xl font-bold text-jebew-black">Kelola Menu &amp; Stok</h3>
+                        <p class="text-xs text-gray-500">Tambah menu baru, edit foto/harga/deskripsi, atur stok, atau hapus menu.</p>
+                    </div>
+                    <button type="button" onclick="openMenuFormModal()" class="w-full sm:w-auto px-5 py-3 rounded-2xl bg-jebew-red hover:bg-jebew-red-dark text-white font-heading font-bold text-sm shadow-md flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-plus"></i>
+                        <span>Tambah Menu Baru</span>
+                    </button>
+                </div>
+
+                <div class="flex flex-col sm:flex-row gap-3">
+                    <input type="text" id="adminMenuSearch" oninput="renderAdminMenus()" placeholder="Cari menu di admin..." class="flex-1 px-4 py-3 rounded-2xl bg-white border border-gray-200 focus:border-jebew-orange outline-none text-sm font-bold">
+                    <select id="adminMenuCatFilter" onchange="renderAdminMenus()" class="px-4 py-3 rounded-2xl bg-white border border-gray-200 focus:border-jebew-orange outline-none text-sm font-bold">
+                        <option value="Semua">Semua Kategori</option>
+                    </select>
+                </div>
+
+                <div id="adminMenuGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"></div>
+            </div>
+
+            <!-- TAB 3: KELOLA TOPPING (KHUSUS ADMIN) -->
+            <div id="adminTab-toppings" class="admin-tab-content hidden space-y-6">
+                <div class="bg-white p-6 rounded-3xl shadow-sm border border-jebew-orange/20 max-w-3xl">
+                    <h3 id="toppingFormHeading" class="font-heading text-xl font-bold text-jebew-black mb-1">Tambah / Edit Topping</h3>
+                    <p class="text-xs text-gray-500 mb-4">Atur topping untuk Mie Jebew, Seblak Prasmanan, Pangsit, Bakaran, atau Semua Menu. Perubahan langsung aktif saat pembeli memesan.</p>
+
+                    <form onsubmit="handleSaveTopping(event)" class="space-y-4">
+                        <input type="hidden" id="editToppingId">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-xs font-extrabold text-gray-700 uppercase mb-1">Nama Topping <span class="text-jebew-red">*</span></label>
+                                <input type="text" id="toppingNameInput" required placeholder="Contoh: Telur Ceplok / Pangsit Kriuk / Ceker" class="w-full px-4 py-2.5 rounded-2xl bg-jebew-cream/60 border-2 border-gray-200 focus:border-jebew-orange focus:bg-white outline-none text-sm font-bold">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-extrabold text-gray-700 uppercase mb-1">Harga Topping (Rp) <span class="text-jebew-red">*</span></label>
+                                <input type="number" id="toppingPriceInput" required min="0" step="500" placeholder="3000" class="w-full px-4 py-2.5 rounded-2xl bg-jebew-cream/60 border-2 border-gray-200 focus:border-jebew-orange focus:bg-white outline-none text-sm font-bold">
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-xs font-extrabold text-gray-700 uppercase mb-1">Target Menu Topping <span class="text-jebew-red">*</span></label>
+                                <select id="toppingTargetInput" required class="w-full px-4 py-2.5 rounded-2xl bg-jebew-cream/60 border-2 border-gray-200 focus:border-jebew-orange focus:bg-white outline-none text-sm font-bold">
+                                    <option value="mie_jebew">Mie Jebew</option>
+                                    <option value="seblak">Seblak Prasmanan</option>
+                                    <option value="pangsit">Pangsit</option>
+                                    <option value="bakaran">Bakaran</option>
+                                    <option value="all">Semua Menu</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-xs font-extrabold text-gray-700 uppercase mb-1">Status Topping</label>
+                                <select id="toppingAvailableInput" class="w-full px-4 py-2.5 rounded-2xl bg-jebew-cream/60 border-2 border-gray-200 focus:border-jebew-orange focus:bg-white outline-none text-sm font-bold">
+                                    <option value="true">Tersedia</option>
+                                    <option value="false">Habis</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="flex flex-wrap gap-3 pt-1">
+                            <button type="submit" class="px-6 py-3 rounded-2xl bg-jebew-red hover:bg-jebew-red-dark text-white font-heading font-bold text-sm shadow-md">
+                                <i class="fa-solid fa-floppy-disk mr-1"></i> Simpan Topping
+                            </button>
+                            <button type="button" id="cancelEditToppingBtn" onclick="resetToppingForm()" class="hidden px-5 py-3 rounded-2xl bg-gray-200 hover:bg-gray-300 text-gray-700 font-bold text-sm">
+                                Batal Edit
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Filter & Daftar Semua Topping -->
+                <div class="bg-white p-5 sm:p-6 rounded-3xl shadow-sm border border-jebew-orange/20 space-y-4">
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-gray-100">
+                        <div>
+                            <h4 class="font-heading text-lg font-bold text-jebew-black">Daftar Topping Terdaftar</h4>
+                            <p class="text-xs text-gray-500">Edit nama, harga, target menu, status tersedia/habis, atau hapus topping.</p>
+                        </div>
+                        <select id="adminToppingFilter" onchange="renderAdminToppings()" class="px-4 py-2 rounded-xl bg-jebew-cream/70 border border-gray-200 text-xs sm:text-sm font-bold outline-none">
+                            <option value="all_filter">Semua Target</option>
+                            <option value="mie_jebew">Mie Jebew</option>
+                            <option value="seblak">Seblak Prasmanan</option>
+                            <option value="pangsit">Pangsit</option>
+                            <option value="bakaran">Bakaran</option>
+                            <option value="all">Semua Menu</option>
+                        </select>
+                    </div>
+                    <div id="adminToppingsList" class="divide-y divide-gray-100"></div>
+                </div>
+            </div>
+
+            <!-- TAB 4: KELOLA KATEGORI -->
+            <div id="adminTab-categories" class="admin-tab-content hidden max-w-2xl space-y-6">
+                <div class="bg-white p-6 rounded-3xl shadow-sm border border-jebew-orange/20 space-y-4">
+                    <h3 class="font-heading text-xl font-bold text-jebew-black">Tambah Kategori Baru</h3>
+                    <form onsubmit="handleAddCategory(event)" class="flex gap-3">
+                        <input type="text" id="newCategoryInput" required placeholder="Contoh: Paket Hemat"
+                               class="flex-1 px-4 py-3 rounded-2xl bg-jebew-cream/60 border-2 border-gray-200 focus:border-jebew-orange focus:bg-white outline-none text-sm font-bold">
+                        <button type="submit" class="px-6 py-3 rounded-2xl bg-jebew-orange hover:bg-jebew-red text-white font-heading font-bold text-sm transition-colors">
+                            Tambah
+                        </button>
+                    </form>
+                </div>
+
+                <div class="bg-white p-6 rounded-3xl shadow-sm border border-jebew-orange/20 space-y-3">
+                    <h3 class="font-heading text-lg font-bold text-jebew-black">Daftar Kategori</h3>
+                    <div id="adminCategoryList" class="divide-y divide-gray-100"></div>
+                </div>
+            </div>
+
+            <!-- TAB 5: KELOLA PROMO -->
+            <div id="adminTab-promo" class="admin-tab-content hidden max-w-2xl">
+                <div class="bg-white p-6 rounded-3xl shadow-sm border border-jebew-orange/20 space-y-5">
+                    <div class="flex items-center justify-between gap-3">
+                        <div>
+                            <h3 class="font-heading text-xl font-bold text-jebew-black">Kelola Promo &amp; Pop-up</h3>
+                            <p class="text-xs text-gray-500">Atur banner promo dan pop-up promo di halaman pembeli.</p>
+                        </div>
+                        <label class="inline-flex items-center cursor-pointer shrink-0">
+                            <input type="checkbox" id="promoActiveToggle" class="sr-only peer">
+                            <div class="relative w-12 h-7 bg-gray-300 rounded-full peer peer-checked:after:translate-x-full after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:rounded-full after:h-6 after:w-6 after:transition-all peer-checked:bg-green-500"></div>
+                            <span class="ms-2 text-xs font-extrabold text-gray-700" id="promoStatusLabel">AKTIF</span>
+                        </label>
+                    </div>
+
+                    <form onsubmit="handleSavePromo(event)" class="space-y-4">
+                        <div>
+                            <label class="block text-xs font-extrabold text-gray-700 uppercase mb-1">Badge Promo</label>
+                            <input type="text" id="promoBadgeInput" required class="w-full px-4 py-3 rounded-2xl bg-jebew-cream/60 border-2 border-gray-200 focus:border-jebew-orange focus:bg-white outline-none text-sm font-bold">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-extrabold text-gray-700 uppercase mb-1">Judul Promo</label>
+                            <input type="text" id="promoTitleInput" required class="w-full px-4 py-3 rounded-2xl bg-jebew-cream/60 border-2 border-gray-200 focus:border-jebew-orange focus:bg-white outline-none text-sm font-bold">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-extrabold text-gray-700 uppercase mb-1">Deskripsi Promo</label>
+                            <textarea id="promoDescInput" rows="3" required class="w-full px-4 py-3 rounded-2xl bg-jebew-cream/60 border-2 border-gray-200 focus:border-jebew-orange focus:bg-white outline-none text-sm font-bold"></textarea>
+                        </div>
+                        <button type="submit" class="w-full py-3.5 rounded-2xl bg-jebew-red hover:bg-jebew-red-dark text-white font-heading font-bold text-sm shadow-md">
+                            Simpan Promo
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- TAB 6: KELOLA TESTIMONI -->
+            <div id="adminTab-testimonials" class="admin-tab-content hidden space-y-6">
+                <div class="bg-white p-6 rounded-3xl shadow-sm border border-jebew-orange/20 max-w-2xl">
+                    <h3 id="testiFormHeading" class="font-heading text-xl font-bold text-jebew-black mb-4">Tambah / Edit Testimoni Pelanggan</h3>
+                    <form onsubmit="handleSaveTestimonial(event)" class="space-y-4">
+                        <input type="hidden" id="editTestiId">
+                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                            <div>
+                                <label class="block text-xs font-extrabold text-gray-700 uppercase mb-1">Nama</label>
+                                <input type="text" id="testiNameInput" required placeholder="Nama pelanggan" class="w-full px-4 py-2.5 rounded-2xl bg-jebew-cream/60 border-2 border-gray-200 focus:border-jebew-orange outline-none text-sm font-bold">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-extrabold text-gray-700 uppercase mb-1">Menu / Keterangan</label>
+                                <input type="text" id="testiRoleInput" required placeholder="Contoh: Mie Jebew Level 3" class="w-full px-4 py-2.5 rounded-2xl bg-jebew-cream/60 border-2 border-gray-200 focus:border-jebew-orange outline-none text-sm font-bold">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-extrabold text-gray-700 uppercase mb-1">Rating (1-5)</label>
+                                <select id="testiRatingInput" class="w-full px-4 py-2.5 rounded-2xl bg-jebew-cream/60 border-2 border-gray-200 focus:border-jebew-orange outline-none text-sm font-bold">
+                                    <option value="5">5 Bintang</option>
+                                    <option value="4">4 Bintang</option>
+                                    <option value="3">3 Bintang</option>
+                                    <option value="2">2 Bintang</option>
+                                    <option value="1">1 Bintang</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-extrabold text-gray-700 uppercase mb-1">Ulasan</label>
+                            <textarea id="testiTextInput" rows="2" required placeholder="Isi ulasan pelanggan..." class="w-full px-4 py-2.5 rounded-2xl bg-jebew-cream/60 border-2 border-gray-200 focus:border-jebew-orange outline-none text-sm font-bold"></textarea>
+                        </div>
+                        <div class="flex gap-3">
+                            <button type="submit" class="px-6 py-3 rounded-2xl bg-jebew-red text-white font-heading font-bold text-sm">Simpan Testimoni</button>
+                            <button type="button" id="cancelEditTestiBtn" onclick="resetTestiForm()" class="hidden px-4 py-3 rounded-2xl bg-gray-200 text-gray-700 font-bold text-sm">Batal Edit</button>
+                        </div>
+                    </form>
+                </div>
+
+                <div id="adminTestimonialsList" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
+            </div>
+
+            <!-- TAB 7: INFO WARUNG & AKUN -->
+            <div id="adminTab-settings" class="admin-tab-content hidden grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <div class="bg-white p-6 rounded-3xl shadow-sm border border-jebew-orange/20 space-y-4">
+                    <h3 class="font-heading text-xl font-bold text-jebew-black">Informasi Warung</h3>
+                    <form onsubmit="handleSaveWarungInfo(event)" class="space-y-3.5">
+                        <div>
+                            <label class="block text-xs font-extrabold text-gray-700 uppercase mb-1">Nama Warung</label>
+                            <input type="text" id="setWarungName" required class="w-full px-4 py-2.5 rounded-2xl bg-jebew-cream/60 border-2 border-gray-200 focus:border-jebew-orange outline-none text-sm font-bold">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-extrabold text-gray-700 uppercase mb-1">Alamat</label>
+                            <textarea id="setWarungAddress" rows="2" required class="w-full px-4 py-2.5 rounded-2xl bg-jebew-cream/60 border-2 border-gray-200 focus:border-jebew-orange outline-none text-sm font-bold"></textarea>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-extrabold text-gray-700 uppercase mb-1">Jam Buka</label>
+                            <input type="text" id="setWarungHours" required class="w-full px-4 py-2.5 rounded-2xl bg-jebew-cream/60 border-2 border-gray-200 focus:border-jebew-orange outline-none text-sm font-bold">
+                        </div>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                            <div>
+                                <label class="block text-xs font-extrabold text-gray-700 uppercase mb-1">Nomor WhatsApp</label>
+                                <input type="text" id="setWarungWa" required class="w-full px-4 py-2.5 rounded-2xl bg-jebew-cream/60 border-2 border-gray-200 focus:border-jebew-orange outline-none text-sm font-bold">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-extrabold text-gray-700 uppercase mb-1">Instagram / TikTok</label>
+                                <input type="text" id="setWarungSocial" required class="w-full px-4 py-2.5 rounded-2xl bg-jebew-cream/60 border-2 border-gray-200 focus:border-jebew-orange outline-none text-sm font-bold">
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-extrabold text-gray-700 uppercase mb-1">Link Google Maps</label>
+                            <input type="url" id="setWarungMaps" required class="w-full px-4 py-2.5 rounded-2xl bg-jebew-cream/60 border-2 border-gray-200 focus:border-jebew-orange outline-none text-sm font-bold">
+                        </div>
+                        <button type="submit" class="w-full py-3.5 rounded-2xl bg-jebew-red hover:bg-jebew-red-dark text-white font-heading font-bold text-sm shadow-md">
+                            Simpan Info Warung
+                        </button>
+                    </form>
+                </div>
+
+                <div class="bg-white p-6 rounded-3xl shadow-sm border border-jebew-orange/20 space-y-4 h-fit">
+                    <h3 class="font-heading text-xl font-bold text-jebew-black">Username &amp; Password Admin</h3>
+                    <form onsubmit="handleSaveCredentials(event)" class="space-y-4">
+                        <div>
+                            <label class="block text-xs font-extrabold text-gray-700 uppercase mb-1">Username Admin</label>
+                            <input type="text" id="setAdminUser" required class="w-full px-4 py-2.5 rounded-2xl bg-jebew-cream/60 border-2 border-gray-200 focus:border-jebew-orange outline-none text-sm font-bold">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-extrabold text-gray-700 uppercase mb-1">Password Admin</label>
+                            <input type="text" id="setAdminPass" required class="w-full px-4 py-2.5 rounded-2xl bg-jebew-cream/60 border-2 border-gray-200 focus:border-jebew-orange outline-none text-sm font-bold">
+                        </div>
+                        <button type="submit" class="w-full py-3.5 rounded-2xl bg-jebew-black hover:bg-gray-800 text-white font-heading font-bold text-sm shadow-md">
+                            Simpan Akun Admin
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== MODAL POP-UP PROMO ==================== -->
+    <div id="promoPopupModal" class="hidden fixed inset-0 z-50 bg-black/70 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-md w-full overflow-hidden shadow-2xl border-4 border-jebew-orange relative">
+            <button type="button" onclick="closePromoPopup()" class="absolute top-3 right-3 w-9 h-9 rounded-full bg-black/50 hover:bg-jebew-red text-white flex items-center justify-center z-10 transition-colors">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <div class="bg-gradient-to-br from-jebew-red to-jebew-orange p-6 text-center text-white">
+                <div class="text-5xl mb-2">🎁🔥</div>
+                <span id="popupPromoBadge" class="inline-block bg-yellow-300 text-jebew-black font-extrabold text-xs px-3 py-1 rounded-full uppercase mb-2">
+                    PROMO SPESIAL HARI INI
+                </span>
+                <h3 id="popupPromoTitle" class="font-heading text-2xl sm:text-3xl font-bold leading-tight">
+                    Beli 2 Mie Jebew Gratis 1 Minuman
+                </h3>
+            </div>
+            <div class="p-6 text-center space-y-4">
+                <p id="popupPromoDesc" class="text-sm sm:text-base text-gray-700 font-semibold">
+                    Berlaku untuk pembelian 2 porsi Mie Jebew, langsung gratis 1 Es Teh Manis!
+                </p>
+                <button type="button" onclick="closePromoPopup(); document.getElementById('menuSection').scrollIntoView({behavior:'smooth'});"
+                        class="w-full py-3.5 rounded-2xl bg-jebew-red hover:bg-jebew-red-dark text-white font-heading font-bold text-base shadow-lg">
+                    Pesan Sekarang
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== MODAL KUSTOMISASI PESANAN ==================== -->
+    <div id="itemModal" class="hidden fixed inset-0 z-50 bg-black/70 backdrop-blur-sm flex items-end sm:items-center justify-center p-0 sm:p-4">
+        <div class="bg-white rounded-t-3xl sm:rounded-3xl max-w-lg w-full max-h-[90vh] flex flex-col overflow-hidden shadow-2xl">
+            <div class="relative h-44 sm:h-52 bg-jebew-black shrink-0">
+                <img id="modalItemImg" src="" alt="" class="w-full h-full object-cover">
+                <div class="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-transparent"></div>
+                <button type="button" onclick="closeItemModal()" class="absolute top-3 right-3 w-10 h-10 rounded-full bg-black/60 hover:bg-jebew-red text-white flex items-center justify-center transition-colors">
+                    <i class="fa-solid fa-xmark text-lg"></i>
+                </button>
+                <div class="absolute bottom-4 left-5 right-5 text-white">
+                    <span id="modalItemCat" class="inline-block bg-jebew-orange text-jebew-black text-[11px] font-extrabold px-2.5 py-0.5 rounded-full uppercase mb-1">Kategori</span>
+                    <h3 id="modalItemName" class="font-heading text-2xl font-bold leading-tight">Nama Menu</h3>
+                    <p id="modalItemBasePrice" class="text-sm font-extrabold text-yellow-300">Rp 12.000</p>
+                </div>
+            </div>
+
+            <div class="p-5 overflow-y-auto space-y-5 flex-1">
+                <p id="modalItemDesc" class="text-sm text-gray-600 font-medium"></p>
+
+                <!-- Level Pedas 1-5 -->
+                <div id="spicyLevelSection" class="hidden space-y-2.5">
+                    <label class="block font-heading font-bold text-base text-jebew-black">
+                        Pilih Level Pedas (1 - 5) <span class="text-jebew-red">*</span>
+                    </label>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2" id="spicyLevelOptions"></div>
+                </div>
+
+                <!-- Kuah Seblak -->
+                <div id="seblakBrothSection" class="hidden space-y-2.5">
+                    <label class="block font-heading font-bold text-base text-jebew-black">
+                        Pilih Kuah Seblak <span class="text-jebew-red">*</span>
+                    </label>
+                    <div class="grid grid-cols-2 gap-2.5">
+                        <label class="cursor-pointer">
+                            <input type="radio" name="seblakBroth" value="Kuah Nyemek" checked class="peer sr-only">
+                            <div class="p-3 rounded-2xl border-2 border-gray-200 peer-checked:border-jebew-red peer-checked:bg-jebew-red/10 text-center font-bold text-sm transition-all">
+                                🍲 Kuah Nyemek
+                            </div>
+                        </label>
+                        <label class="cursor-pointer">
+                            <input type="radio" name="seblakBroth" value="Kuah Banjir" class="peer sr-only">
+                            <div class="p-3 rounded-2xl border-2 border-gray-200 peer-checked:border-jebew-red peer-checked:bg-jebew-red/10 text-center font-bold text-sm transition-all">
+                                🌊 Kuah Banjir
+                            </div>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Topping Seblak Prasmanan -->
+                <div id="seblakToppingsSection" class="hidden space-y-2.5">
+                    <div class="flex items-center justify-between">
+                        <label class="block font-heading font-bold text-base text-jebew-black">
+                            Pilih Topping Seblak Prasmanan
+                        </label>
+                        <span class="text-xs font-bold text-jebew-orange">Otomatis terhitung</span>
+                    </div>
+                    <div id="seblakToppingsGrid" class="grid grid-cols-1 sm:grid-cols-2 gap-2"></div>
+                </div>
+
+                <!-- Topping Tambahan Dinamis Sesuai Menu -->
+                <div id="extraToppingsSection" class="hidden space-y-2.5">
+                    <div class="flex items-center justify-between">
+                        <label id="extraToppingsLabel" class="block font-heading font-bold text-base text-jebew-black">
+                            Topping Tambahan
+                        </label>
+                        <span class="text-xs font-bold text-jebew-orange">Opsional</span>
+                    </div>
+                    <div id="extraToppingsGrid" class="grid grid-cols-1 sm:grid-cols-2 gap-2"></div>
+                </div>
+
+                <!-- Bumbu Bakaran -->
+                <div id="bbqSauceSection" class="hidden space-y-2.5">
+                    <label class="block font-heading font-bold text-base text-jebew-black">
+                        Pilih Bumbu Bakaran <span class="text-jebew-red">*</span>
+                    </label>
+                    <div class="grid grid-cols-2 gap-2" id="bbqSauceGrid"></div>
+                </div>
+
+                <!-- Catatan Per Item -->
+                <div class="space-y-1.5">
+                    <label class="block font-heading font-bold text-sm text-jebew-black">Catatan Menu Ini (Opsional)</label>
+                    <input type="text" id="modalItemNote" placeholder="Contoh: pisah kuah, tidak pedas..."
+                           class="w-full px-4 py-2.5 rounded-2xl bg-jebew-cream/60 border-2 border-gray-200 focus:border-jebew-orange focus:bg-white outline-none text-sm font-semibold">
+                </div>
+            </div>
+
+            <div class="p-4 sm:p-5 bg-jebew-cream/60 border-t border-jebew-orange/20 flex items-center justify-between gap-4 shrink-0">
+                <div class="flex items-center bg-white rounded-2xl border-2 border-jebew-orange/30 p-1">
+                    <button type="button" onclick="changeModalQty(-1)" class="w-9 h-9 rounded-xl bg-jebew-cream hover:bg-jebew-orange hover:text-white font-bold text-lg flex items-center justify-center transition-colors">-</button>
+                    <span id="modalQtyDisplay" class="w-10 text-center font-heading font-bold text-lg">1</span>
+                    <button type="button" onclick="changeModalQty(1)" class="w-9 h-9 rounded-xl bg-jebew-cream hover:bg-jebew-orange hover:text-white font-bold text-lg flex items-center justify-center transition-colors">+</button>
+                </div>
+
+                <button type="button" onclick="addConfiguredItemToCart()" class="flex-1 py-3.5 px-4 rounded-2xl bg-jebew-red hover:bg-jebew-red-dark text-white font-heading font-bold text-sm sm:text-base shadow-lg flex items-center justify-between transition-all">
+                    <span>+ Keranjang</span>
+                    <span id="modalCalculatedTotal">Rp 12.000</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== DRAWER KERANJANG & CHECKOUT WHATSAPP ==================== -->
+    <div id="cartDrawer" class="hidden fixed inset-0 z-50 bg-black/70 backdrop-blur-sm flex justify-end">
+        <div class="bg-white w-full max-w-md h-full flex flex-col shadow-2xl overflow-hidden">
+            <div class="p-5 bg-jebew-red text-white flex items-center justify-between shrink-0">
+                <div class="flex items-center gap-2.5">
+                    <i class="fa-solid fa-bag-shopping text-2xl"></i>
+                    <div>
+                        <h3 class="font-heading text-xl font-bold leading-tight">Keranjang Pesanan</h3>
+                        <p class="text-xs text-white/85">Kirim pesanan rapi ke WhatsApp Teh Encuy</p>
+                    </div>
+                </div>
+                <button type="button" onclick="closeCartDrawer()" class="w-9 h-9 rounded-full bg-white/20 hover:bg-white/30 flex items-center justify-center">
+                    <i class="fa-solid fa-xmark text-lg"></i>
+                </button>
+            </div>
+
+            <div class="flex-1 overflow-y-auto p-5 space-y-6">
+                <div id="cartItemsContainer" class="space-y-3"></div>
+
+                <div id="checkoutFormSection" class="hidden space-y-4 pt-4 border-t-2 border-dashed border-gray-200">
+                    <h4 class="font-heading text-lg font-bold text-jebew-black">Informasi Pembeli</h4>
+
+                    <div>
+                        <label class="block text-xs font-extrabold text-gray-700 uppercase mb-1">Nama Pembeli <span class="text-jebew-red">*</span></label>
+                        <input type="text" id="custNameInput" placeholder="Masukkan nama kamu..."
+                               class="w-full px-4 py-3 rounded-2xl bg-jebew-cream/60 border-2 border-gray-200 focus:border-jebew-red focus:bg-white outline-none text-sm font-bold">
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-extrabold text-gray-700 uppercase mb-1.5">Tipe Pesanan <span class="text-jebew-red">*</span></label>
+                        <div class="grid grid-cols-3 gap-2">
+                            <label class="cursor-pointer">
+                                <input type="radio" name="orderType" value="Makan di Tempat" checked onchange="toggleDeliveryAddress()" class="peer sr-only">
+                                <div class="p-2.5 rounded-2xl border-2 border-gray-200 peer-checked:border-jebew-red peer-checked:bg-jebew-red/10 text-center font-bold text-xs transition-all">
+                                    🍽️ Makan di Tempat
+                                </div>
+                            </label>
+                            <label class="cursor-pointer">
+                                <input type="radio" name="orderType" value="Dibungkus" onchange="toggleDeliveryAddress()" class="peer sr-only">
+                                <div class="p-2.5 rounded-2xl border-2 border-gray-200 peer-checked:border-jebew-red peer-checked:bg-jebew-red/10 text-center font-bold text-xs transition-all">
+                                    🛍️ Dibungkus
+                                </div>
+                            </label>
+                            <label class="cursor-pointer">
+                                <input type="radio" name="orderType" value="Delivery" onchange="toggleDeliveryAddress()" class="peer sr-only">
+                                <div class="p-2.5 rounded-2xl border-2 border-gray-200 peer-checked:border-jebew-red peer-checked:bg-jebew-red/10 text-center font-bold text-xs transition-all">
+                                    🛵 Delivery
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div id="deliveryAddressBox" class="hidden">
+                        <label class="block text-xs font-extrabold text-gray-700 uppercase mb-1">Alamat Delivery <span class="text-jebew-red">*</span></label>
+                        <textarea id="custAddressInput" rows="2" placeholder="Tulis alamat lengkap / patokan..."
+                                  class="w-full px-4 py-2.5 rounded-2xl bg-jebew-cream/60 border-2 border-gray-200 focus:border-jebew-red focus:bg-white outline-none text-sm font-bold"></textarea>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-extrabold text-gray-700 uppercase mb-1">Catatan Pesanan (Opsional)</label>
+                        <textarea id="custNoteInput" rows="2" placeholder="Contoh: tidak pedas, pisah kuah..."
+                                  class="w-full px-4 py-2.5 rounded-2xl bg-jebew-cream/60 border-2 border-gray-200 focus:border-jebew-red focus:bg-white outline-none text-sm font-bold"></textarea>
+                    </div>
+                </div>
+            </div>
+
+            <div id="cartFooterSection" class="hidden p-5 bg-jebew-cream border-t-2 border-jebew-orange/20 space-y-3 shrink-0">
+                <div class="flex items-center justify-between text-sm font-bold text-gray-600">
+                    <span>Total Item</span>
+                    <span id="drawerTotalItems">0 item</span>
+                </div>
+                <div class="flex items-center justify-between">
+                    <span class="font-heading text-lg font-bold text-jebew-black">Total Harga</span>
+                    <span id="drawerTotalPrice" class="font-heading text-2xl font-bold text-jebew-red">Rp 0</span>
+                </div>
+                <button type="button" onclick="checkoutToWhatsApp()" class="w-full py-4 rounded-2xl bg-green-600 hover:bg-green-700 text-white font-heading font-bold text-base shadow-lg flex items-center justify-center gap-2 transition-transform active:scale-95">
+                    <i class="fa-brands fa-whatsapp text-2xl"></i>
+                    <span>Checkout ke WhatsApp</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== MODAL TAMBAH / EDIT MENU ADMIN ==================== -->
+    <div id="menuFormModal" class="hidden fixed inset-0 z-50 bg-black/70 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-lg w-full max-h-[90vh] flex flex-col overflow-hidden shadow-2xl">
+            <div class="p-5 bg-jebew-black text-white flex items-center justify-between shrink-0">
+                <h3 id="menuFormModalTitle" class="font-heading text-xl font-bold">Tambah Menu Baru</h3>
+                <button type="button" onclick="closeMenuFormModal()" class="w-8 h-8 rounded-full bg-white/15 hover:bg-jebew-red flex items-center justify-center">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+
+            <form onsubmit="handleSaveMenu(event)" class="p-5 overflow-y-auto space-y-4 flex-1">
+                <input type="hidden" id="editMenuId">
+
+                <div>
+                    <label class="block text-xs font-extrabold text-gray-700 uppercase mb-1">Nama Menu <span class="text-jebew-red">*</span></label>
+                    <input type="text" id="menuNameInput" required placeholder="Contoh: Mie Jebew Spesial" class="w-full px-4 py-2.5 rounded-2xl bg-jebew-cream/60 border-2 border-gray-200 focus:border-jebew-orange outline-none text-sm font-bold">
+                </div>
+
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block text-xs font-extrabold text-gray-700 uppercase mb-1">Kategori <span class="text-jebew-red">*</span></label>
+                        <select id="menuCategoryInput" required class="w-full px-3 py-2.5 rounded-2xl bg-jebew-cream/60 border-2 border-gray-200 focus:border-jebew-orange outline-none text-sm font-bold"></select>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-extrabold text-gray-700 uppercase mb-1">Harga (Rp) <span class="text-jebew-red">*</span></label>
+                        <input type="number" id="menuPriceInput" required min="0" step="500" placeholder="12000" class="w-full px-4 py-2.5 rounded-2xl bg-jebew-cream/60 border-2 border-gray-200 focus:border-jebew-orange outline-none text-sm font-bold">
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-extrabold text-gray-700 uppercase mb-1">Deskripsi <span class="text-jebew-red">*</span></label>
+                    <textarea id="menuDescInput" rows="2" required placeholder="Deskripsi singkat menu..." class="w-full px-4 py-2.5 rounded-2xl bg-jebew-cream/60 border-2 border-gray-200 focus:border-jebew-orange outline-none text-sm font-bold"></textarea>
+                </div>
+
+                <div class="grid grid-cols-3 gap-3">
+                    <div>
+                        <label class="block text-xs font-extrabold text-gray-700 uppercase mb-1">Level Pedas</label>
+                        <select id="menuSpicyInput" class="w-full px-3 py-2.5 rounded-2xl bg-jebew-cream/60 border-2 border-gray-200 focus:border-jebew-orange outline-none text-xs sm:text-sm font-bold">
+                            <option value="5">Level 1-5</option>
+                            <option value="0">Tidak Pedas</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-extrabold text-gray-700 uppercase mb-1">Label</label>
+                        <select id="menuBadgeInput" class="w-full px-3 py-2.5 rounded-2xl bg-jebew-cream/60 border-2 border-gray-200 focus:border-jebew-orange outline-none text-xs sm:text-sm font-bold">
+                            <option value="">Tidak Ada</option>
+                            <option value="Best Seller">Best Seller</option>
+                            <option value="Hemat">Hemat</option>
+                            <option value="Baru">Baru</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-extrabold text-gray-700 uppercase mb-1">Stok</label>
+                        <input type="number" id="menuStockInput" required min="0" value="30" class="w-full px-3 py-2.5 rounded-2xl bg-jebew-cream/60 border-2 border-gray-200 focus:border-jebew-orange outline-none text-sm font-bold">
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-extrabold text-gray-700 uppercase mb-1">Status</label>
+                    <select id="menuAvailableInput" class="w-full px-4 py-2.5 rounded-2xl bg-jebew-cream/60 border-2 border-gray-200 focus:border-jebew-orange outline-none text-sm font-bold">
+                        <option value="true">Tersedia</option>
+                        <option value="false">Habis</option>
+                    </select>
+                </div>
+
+                <div class="space-y-2 p-3.5 rounded-2xl bg-jebew-cream/60 border border-jebew-orange/30">
+                    <label class="block text-xs font-extrabold text-gray-700 uppercase">Foto Makanan (Upload File / URL)</label>
+                    <input type="file" id="menuImageFile" accept="image/*" onchange="handleImageFileUpload(event)" class="block w-full text-xs text-gray-600 file:mr-3 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-bold file:bg-jebew-orange file:text-white hover:file:bg-jebew-red cursor-pointer">
+                    <input type="text" id="menuImageUrl" placeholder="Atau masukkan link URL gambar..." oninput="previewImageUrl(this.value)" class="w-full px-3 py-2 rounded-xl bg-white border border-gray-200 text-xs font-semibold">
+                    <div class="mt-2 flex items-center gap-3">
+                        <img id="menuImagePreview" src="https://images.unsplash.com/photo-1569718212165-3a8278d5f624?auto=format&fit=crop&w=400&q=80" alt="Preview" class="w-16 h-16 rounded-xl object-cover border border-gray-300">
+                        <span class="text-[11px] text-gray-500">Preview foto menu.</span>
+                    </div>
+                </div>
+
+                <div class="pt-2 flex gap-3">
+                    <button type="button" onclick="closeMenuFormModal()" class="flex-1 py-3 rounded-2xl bg-gray-200 text-gray-700 font-bold text-sm">Batal</button>
+                    <button type="submit" class="flex-1 py-3 rounded-2xl bg-jebew-red hover:bg-jebew-red-dark text-white font-heading font-bold text-sm shadow-md">Simpan</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- ==================== MODAL KONFIRMASI HAPUS ==================== -->
+    <div id="confirmDeleteModal" class="hidden fixed inset-0 z-50 bg-black/70 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-sm w-full p-6 text-center space-y-4 shadow-2xl border-2 border-jebew-red">
+            <div class="w-14 h-14 rounded-full bg-red-100 text-jebew-red flex items-center justify-center text-2xl mx-auto">
+                <i class="fa-solid fa-trash-can"></i>
+            </div>
+            <h3 class="font-heading text-xl font-bold text-jebew-black" id="confirmModalTitle">Yakin hapus menu ini?</h3>
+            <p class="text-sm text-gray-600" id="confirmModalDesc">Tindakan ini akan menghapus data secara permanen.</p>
+            <div class="flex gap-3 pt-2">
+                <button type="button" onclick="closeConfirmModal()" class="flex-1 py-2.5 rounded-2xl bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold text-sm">Batal</button>
+                <button type="button" id="confirmDeleteBtn" class="flex-1 py-2.5 rounded-2xl bg-jebew-red hover:bg-jebew-red-dark text-white font-heading font-bold text-sm shadow-md">Ya, Hapus</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ==================== CONSTANTS & SEED DATA ====================
+        const STORAGE_KEY = 'mie_jebew_teh_encuy_v4';
+        const SESSION_KEY = 'mie_jebew_teh_encuy_v4_admin_auth';
+
+        const DEFAULT_DATA = {
+            warungInfo: {
+                name: 'MIE JEBEW TEH ENCUY',
+                address: 'Gg. Kangkung, Bogor Kabupaten, Jawa Barat, Indonesia',
+                hours: 'Setiap Hari 11.00 - 21.00 WIB (sampai habis)',
+                whatsapp: '089635938859',
+                social: '@mie_jebew_teh_encuy',
+                mapsUrl: 'https://www.google.com/maps/search/?api=1&query=-6.503943,106.745766'
+            },
+            adminAuth: {
+                username: 'admin',
+                password: 'tehencuy123'
+            },
+            promo: {
+                active: true,
+                badge: 'PROMO SPESIAL HARI INI',
+                title: 'Beli 2 Mie Jebew Gratis 1 Minuman',
+                description: 'Setiap pembelian 2 porsi Mie Jebew varian apa saja, langsung gratis 1 Es Teh Manis segar!'
+            },
+            categories: ['Mie Jebew', 'Pangsit', 'Seblak', 'Bakaran', 'Minuman'],
+            menus: [
+                {
+                    id: 'm1',
+                    name: 'Mie Jebew',
+                    category: 'Mie Jebew',
+                    price: 12000,
+                    description: 'Mie pedas gurih dengan chilli oil racikan Teh Encuy, pangsit kriuk, dan level pedas 1-5.',
+                    spicyMax: 5,
+                    badge: 'Best Seller',
+                    stock: 50,
+                    available: true,
+                    image: 'https://images.unsplash.com/photo-1569718212165-3a8278d5f624?auto=format&fit=crop&w=700&q=80'
+                },
+                {
+                    id: 'm2',
+                    name: 'Mie Jebew 1/2 Porsi',
+                    category: 'Mie Jebew',
+                    price: 7000,
+                    description: 'Porsi setengah hemat pas buat ngemil pedas nampol.',
+                    spicyMax: 5,
+                    badge: 'Hemat',
+                    stock: 40,
+                    available: true,
+                    image: 'https://images.unsplash.com/photo-1612929633738-8fe44f7ec841?auto=format&fit=crop&w=700&q=80'
+                },
+                {
+                    id: 'm3',
+                    name: 'Pangsit Chilli Oil',
+                    category: 'Pangsit',
+                    price: 12000,
+                    description: 'Pangsit rebus lembut gurih disiram chilli oil pedas khas Teh Encuy.',
+                    spicyMax: 5,
+                    badge: 'Best Seller',
+                    stock: 35,
+                    available: true,
+                    image: 'https://images.unsplash.com/photo-1541696432-82c6da8ce7bf?auto=format&fit=crop&w=700&q=80'
+                },
+                {
+                    id: 'm4',
+                    name: 'Pangsit Chilli Oil 1/2 Porsi',
+                    category: 'Pangsit',
+                    price: 6000,
+                    description: 'Porsi setengah Pangsit Chilli Oil yang ramah di kantong.',
+                    spicyMax: 5,
+                    badge: 'Hemat',
+                    stock: 30,
+                    available: true,
+                    image: 'https://images.unsplash.com/photo-1625220194771-7ebdea0b70b9?auto=format&fit=crop&w=700&q=80'
+                },
+                {
+                    id: 'm5',
+                    name: 'Seblak Prasmanan',
+                    category: 'Seblak',
+                    price: 0,
+                    isSeblakPrasmanan: true,
+                    description: 'Pilih sendiri topping seblak, level pedas 1-5, dan kuah nyemek atau kuah banjir.',
+                    spicyMax: 5,
+                    badge: 'Best Seller',
+                    stock: 100,
+                    available: true,
+                    image: 'https://images.unsplash.com/photo-1585032226651-759b368d7246?auto=format&fit=crop&w=700&q=80'
+                },
+                {
+                    id: 'm6',
+                    name: 'Sosis Bakar',
+                    category: 'Bakaran',
+                    price: 3000,
+                    description: 'Sosis bakar gurih dengan pilihan bumbu Pedas, Manis, Balado, atau Jagung Bakar.',
+                    spicyMax: 0,
+                    badge: '',
+                    stock: 50,
+                    available: true,
+                    image: 'https://images.unsplash.com/photo-1555939594-58d7cb561ad1?auto=format&fit=crop&w=700&q=80'
+                },
+                {
+                    id: 'm7',
+                    name: 'Bakso Bakar',
+                    category: 'Bakaran',
+                    price: 2000,
+                    description: 'Bakso tusuk bakar kenyal gurih dengan aneka pilihan bumbu oles.',
+                    spicyMax: 0,
+                    badge: 'Hemat',
+                    stock: 60,
+                    available: true,
+                    image: 'https://images.unsplash.com/photo-1529042410759-befb1204b468?auto=format&fit=crop&w=700&q=80'
+                },
+                {
+                    id: 'm8',
+                    name: 'Sosis Jumbo Bakar',
+                    category: 'Bakaran',
+                    price: 5000,
+                    description: 'Sosis ukuran jumbo bakar puas dan juicy.',
+                    spicyMax: 0,
+                    badge: '',
+                    stock: 30,
+                    available: true,
+                    image: 'https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=700&q=80'
+                },
+                {
+                    id: 'm9',
+                    name: 'Dumpling Bakar',
+                    category: 'Bakaran',
+                    price: 3000,
+                    description: 'Dumpling bakar gurih dengan pilihan bumbu spesial.',
+                    spicyMax: 0,
+                    badge: '',
+                    stock: 40,
+                    available: true,
+                    image: 'https://images.unsplash.com/photo-1496116218417-1a781b1c416c?auto=format&fit=crop&w=700&q=80'
+                },
+                {
+                    id: 'm10',
+                    name: 'Otak-otak Bakar',
+                    category: 'Bakaran',
+                    price: 2000,
+                    description: 'Otak-otak ikan bakar gurih nikmat disantap hangat.',
+                    spicyMax: 0,
+                    badge: 'Hemat',
+                    stock: 50,
+                    available: true,
+                    image: 'https://images.unsplash.com/photo-1603360946369-dc9bb6258143?auto=format&fit=crop&w=700&q=80'
+                },
+                {
+                    id: 'm11',
+                    name: 'Es Teh Manis',
+                    category: 'Minuman',
+                    price: 5000,
+                    description: 'Es teh manis segar pelepas dahaga.',
+                    spicyMax: 0,
+                    badge: '',
+                    stock: 100,
+                    available: true,
+                    image: 'https://images.unsplash.com/photo-1556679343-c7306c1976bc?auto=format&fit=crop&w=700&q=80'
+                },
+                {
+                    id: 'm12',
+                    name: 'Es Teh Jumbo',
+                    category: 'Minuman',
+                    price: 7000,
+                    description: 'Es teh manis ukuran jumbo lebih puas dan hemat.',
+                    spicyMax: 0,
+                    badge: 'Hemat',
+                    stock: 80,
+                    available: true,
+                    image: 'https://images.unsplash.com/photo-1499638673689-79a0b5115d87?auto=format&fit=crop&w=700&q=80'
+                },
+                {
+                    id: 'm13',
+                    name: 'Es Jeruk',
+                    category: 'Minuman',
+                    price: 7000,
+                    description: 'Es jeruk segar manis asam.',
+                    spicyMax: 0,
+                    badge: '',
+                    stock: 50,
+                    available: true,
+                    image: 'https://images.unsplash.com/photo-1621506289937-a8e4df240d0b?auto=format&fit=crop&w=700&q=80'
+                },
+                {
+                    id: 'm14',
+                    name: 'Es Nutrisari',
+                    category: 'Minuman',
+                    price: 6000,
+                    description: 'Minuman dingin rasa jeruk segar.',
+                    spicyMax: 0,
+                    badge: '',
+                    stock: 60,
+                    available: true,
+                    image: 'https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?auto=format&fit=crop&w=700&q=80'
+                },
+                {
+                    id: 'm15',
+                    name: 'Air Mineral',
+                    category: 'Minuman',
+                    price: 4000,
+                    description: 'Air mineral botol dingin menyegarkan.',
+                    spicyMax: 0,
+                    badge: '',
+                    stock: 100,
+                    available: true,
+                    image: 'https://images.unsplash.com/photo-1548839140-29a749e1cf4d?auto=format&fit=crop&w=700&q=80'
+                },
+                {
+                    id: 'm16',
+                    name: 'Es Cappuccino Cincau',
+                    category: 'Minuman',
+                    price: 8000,
+                    description: 'Perpaduan cappuccino dingin creamy dan cincau kenyal.',
+                    spicyMax: 0,
+                    badge: 'Baru',
+                    stock: 40,
+                    available: true,
+                    image: 'https://images.unsplash.com/photo-1461023058943-07fcbe16d735?auto=format&fit=crop&w=700&q=80'
+                }
+            ],
+            toppings: [
+                { id: 'tp_m1', name: 'Pangsit Kriuk', price: 3000, target: 'mie_jebew', available: true },
+                { id: 'tp_m2', name: 'Telur Ceplok', price: 4000, target: 'mie_jebew', available: true },
+                { id: 'tp_m3', name: 'Bakso', price: 3000, target: 'mie_jebew', available: true },
+                { id: 'tp_m4', name: 'Sosis', price: 3000, target: 'mie_jebew', available: true },
+                { id: 'tp_m5', name: 'Ceker', price: 4000, target: 'mie_jebew', available: true },
+                { id: 'tp_m6', name: 'Keju Lumer', price: 4000, target: 'mie_jebew', available: true },
+                { id: 'tp_s1', name: 'Kerupuk', price: 2000, target: 'seblak', available: true },
+                { id: 'tp_s2', name: 'Makaroni', price: 2000, target: 'seblak', available: true },
+                { id: 'tp_s3', name: 'Mie', price: 2000, target: 'seblak', available: true },
+                { id: 'tp_s4', name: 'Ceker', price: 4000, target: 'seblak', available: true },
+                { id: 'tp_s5', name: 'Sosis', price: 3000, target: 'seblak', available: true },
+                { id: 'tp_s6', name: 'Bakso', price: 3000, target: 'seblak', available: true },
+                { id: 'tp_s7', name: 'Telur', price: 4000, target: 'seblak', available: true },
+                { id: 'tp_s8', name: 'Dumpling', price: 4000, target: 'seblak', available: true },
+                { id: 'tp_p1', name: 'Chilli Oil Ekstra', price: 2000, target: 'pangsit', available: true },
+                { id: 'tp_p2', name: 'Pangsit Goreng Ekstra', price: 3000, target: 'pangsit', available: true }
+            ],
+            testimonials: [
+                {
+                    id: 'rev1',
+                    name: 'Nadia Putri',
+                    role: 'Mie Jebew Level 3',
+                    rating: 5,
+                    text: 'Chilli oil-nya wangi dan pedasnya beneran nampol! Harga ramah di kantong anak tongkrongan.',
+                    avatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=150&q=80'
+                },
+                {
+                    id: 'rev2',
+                    name: 'Rizky Ramadhan',
+                    role: 'Seblak Prasmanan',
+                    rating: 5,
+                    text: 'Seblak prasmanannya bebas pilih topping, kuah nyemeknya mantap. Es teh jumbonya nyegerin banget!',
+                    avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=150&q=80'
+                },
+                {
+                    id: 'rev3',
+                    name: 'Siti Rahmawati',
+                    role: 'Pangsit Chilli Oil',
+                    rating: 5,
+                    text: 'Pangsit chilli oil lembut dan gurih, ditambah sosis bakar bumbu balado makin klop.',
+                    avatar: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&w=150&q=80'
+                },
+                {
+                    id: 'rev4',
+                    name: 'Dimas Pratama',
+                    role: 'Mie Jebew 1/2 Porsi',
+                    rating: 5,
+                    text: 'Porsi 1/2 aja udah bikin puas ngemil, apalagi porsi penuh. Sering mampir ke Gg. Kangkung!',
+                    avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=150&q=80'
+                }
+            ]
+        };
+
+        const SPICY_LEVELS = [
+            { level: 1, label: 'Level 1', desc: 'Pedas ringan' },
+            { level: 2, label: 'Level 2', desc: 'Pedas sedang' },
+            { level: 3, label: 'Level 3', desc: 'Pedas nampol' },
+            { level: 4, label: 'Level 4', desc: 'Pedas banget' },
+            { level: 5, label: 'Level 5', desc: 'Pedas jebew' }
+        ];
+
+        const BBQ_SAUCES = ['Pedas', 'Manis', 'Balado', 'Jagung Bakar'];
+
+        const TARGET_LABELS = {
+            mie_jebew: 'Mie Jebew',
+            seblak: 'Seblak Prasmanan',
+            pangsit: 'Pangsit',
+            bakaran: 'Bakaran',
+            all: 'Semua Menu'
+        };
+
+        // ==================== STORAGE & AUTO-SEED ====================
+        function loadAppData() {
+            const fallback = JSON.parse(JSON.stringify(DEFAULT_DATA));
+            try {
+                const raw = localStorage.getItem(STORAGE_KEY);
+                if (!raw) {
+                    localStorage.setItem(STORAGE_KEY, JSON.stringify(fallback));
+                    return fallback;
+                }
+                const parsed = JSON.parse(raw);
+                if (!parsed || typeof parsed !== 'object') {
+                    localStorage.setItem(STORAGE_KEY, JSON.stringify(fallback));
+                    return fallback;
+                }
+
+                const validMenus = Array.isArray(parsed.menus) && parsed.menus.length > 0 ? parsed.menus : fallback.menus;
+                const validCategories = Array.isArray(parsed.categories) && parsed.categories.length > 0 ? parsed.categories : fallback.categories;
+                const validToppings = Array.isArray(parsed.toppings) ? parsed.toppings : fallback.toppings;
+                const validTestimonials = Array.isArray(parsed.testimonials) && parsed.testimonials.length > 0 ? parsed.testimonials : fallback.testimonials;
+
+                const normalized = {
+                    warungInfo: { ...fallback.warungInfo, ...(parsed.warungInfo || {}) },
+                    adminAuth: { ...fallback.adminAuth, ...(parsed.adminAuth || {}) },
+                    promo: { ...fallback.promo, ...(parsed.promo || {}) },
+                    categories: validCategories,
+                    menus: validMenus,
+                    toppings: validToppings,
+                    testimonials: validTestimonials
+                };
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(normalized));
+                return normalized;
+            } catch (err) {
+                console.error('Auto-recovery localStorage:', err);
+                try {
+                    localStorage.setItem(STORAGE_KEY, JSON.stringify(fallback));
+                } catch (_) {}
+                return fallback;
+            }
+        }
+
+        let appData = loadAppData();
+        let activeCategory = 'Semua';
+        let cart = [];
+        let currentModalItem = null;
+        let currentModalQty = 1;
+        let isAdminLoggedIn = sessionStorage.getItem(SESSION_KEY) === 'true';
+        let pendingDeleteAction = null;
+
+        function saveAppData() {
+            try {
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(appData));
+            } catch (e) {
+                showToast('Penyimpanan penuh! Coba gunakan gambar lebih kecil.', 'error');
+            }
+            syncAllViews();
+        }
+
+        // ==================== FORMATTERS & TOAST ====================
+        function formatRupiah(num) {
+            return 'Rp ' + Number(num || 0).toLocaleString('id-ID');
+        }
+
+        function formatWaNumber(phone) {
+            let digits = String(phone || '').replace(/\D/g, '');
+            if (!digits) return '6289635938859';
+            if (digits.startsWith('0')) return '62' + digits.slice(1);
+            if (!digits.startsWith('62')) return '62' + digits;
+            return digits;
+        }
+
+        function showToast(msg, type = 'success') {
+            const container = document.getElementById('toastContainer');
+            if (!container) return;
+            const el = document.createElement('div');
+            const bg = type === 'error' ? 'bg-jebew-red' : 'bg-jebew-black';
+            const icon = type === 'error' ? 'fa-circle-exclamation' : 'fa-circle-check text-green-400';
+            el.className = `${bg} text-white px-4 py-3 rounded-2xl shadow-xl text-xs sm:text-sm font-bold flex items-center gap-2.5 transition-all duration-300`;
+            el.innerHTML = `<i class="fa-solid ${icon} text-base"></i><span>${msg}</span>`;
+            container.appendChild(el);
+            setTimeout(() => {
+                el.style.opacity = '0';
+                setTimeout(() => el.remove(), 250);
+            }, 2800);
+        }
+
+        // ==================== MODE SWITCHING ====================
+        function switchMode(mode) {
+            const buyerEl = document.getElementById('buyerView');
+            const adminEl = document.getElementById('adminView');
+            const btnBuyer = document.getElementById('btnModeBuyer');
+            const btnAdmin = document.getElementById('btnModeAdmin');
+
+            if (mode === 'admin') {
+                buyerEl.classList.add('hidden');
+                adminEl.classList.remove('hidden');
+                btnAdmin.className = 'px-2.5 sm:px-4 py-1.5 sm:py-2 rounded-xl font-heading text-xs sm:text-sm font-bold transition-all flex items-center gap-1 bg-jebew-red text-white shadow-md';
+                btnBuyer.className = 'px-2.5 sm:px-4 py-1.5 sm:py-2 rounded-xl font-heading text-xs sm:text-sm font-bold transition-all flex items-center gap-1 text-jebew-black hover:text-jebew-red';
+                renderAdminAuthState();
+            } else {
+                adminEl.classList.add('hidden');
+                buyerEl.classList.remove('hidden');
+                btnBuyer.className = 'px-2.5 sm:px-4 py-1.5 sm:py-2 rounded-xl font-heading text-xs sm:text-sm font-bold transition-all flex items-center gap-1 bg-jebew-red text-white shadow-md';
+                btnAdmin.className = 'px-2.5 sm:px-4 py-1.5 sm:py-2 rounded-xl font-heading text-xs sm:text-sm font-bold transition-all flex items-center gap-1 text-jebew-black hover:text-jebew-red';
+                syncAllViews();
+            }
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // ==================== BUYER VIEW SYNC & RENDER ====================
+        function syncAllViews() {
+            const info = appData.warungInfo;
+            const waNum = formatWaNumber(info.whatsapp);
+
+            document.getElementById('navWarungName').textContent = info.name;
+            document.getElementById('heroHours').textContent = info.hours;
+            document.getElementById('locAddressText').textContent = info.address;
+            document.getElementById('locHoursText').textContent = info.hours;
+            document.getElementById('locWaText').textContent = info.whatsapp;
+            document.getElementById('btnDirections').href = info.mapsUrl;
+            document.getElementById('btnDirectWa').href = `https://wa.me/${waNum}`;
+            document.getElementById('floatingWaBtn').href = `https://wa.me/${waNum}?text=${encodeURIComponent('Halo ' + info.name + ', saya mau pesan / tanya menu.')}`;
+
+            document.getElementById('footerWarungName').textContent = info.name;
+            document.getElementById('footerAddress').textContent = info.address;
+            document.getElementById('footerHours').textContent = info.hours;
+            document.getElementById('footerWa').textContent = info.whatsapp;
+            document.getElementById('footerSocialText').textContent = info.social;
+            document.getElementById('footerCopyName').textContent = info.name;
+            const handleClean = String(info.social || '').replace(/^@/, '');
+            document.getElementById('footerIgLink').href = `https://instagram.com/${handleClean}`;
+            document.getElementById('footerTiktokLink').href = `https://tiktok.com/@${handleClean}`;
+
+            const promo = appData.promo;
+            const banner = document.getElementById('inlinePromoBanner');
+            if (promo && promo.active) {
+                banner.classList.remove('hidden');
+                document.getElementById('inlinePromoBadge').textContent = promo.badge || 'PROMO SPESIAL HARI INI';
+                document.getElementById('inlinePromoTitle').textContent = promo.title;
+                document.getElementById('inlinePromoDesc').textContent = promo.description;
+                document.getElementById('popupPromoBadge').textContent = promo.badge || 'PROMO SPESIAL HARI INI';
+                document.getElementById('popupPromoTitle').textContent = promo.title;
+                document.getElementById('popupPromoDesc').textContent = promo.description;
+            } else {
+                banner.classList.add('hidden');
+                document.getElementById('promoPopupModal').classList.add('hidden');
+            }
+
+            renderCategoryFilters();
+            renderBuyerMenu();
+            renderTestimonials();
+            updateCartUI();
+
+            if (isAdminLoggedIn) {
+                renderAdminDashboard();
+            }
+        }
+
+        function renderCategoryFilters() {
+            const bar = document.getElementById('categoryFilterBar');
+            const cats = ['Semua', ...appData.categories];
+            if (!cats.includes(activeCategory)) activeCategory = 'Semua';
+
+            bar.innerHTML = cats.map(cat => {
+                const active = activeCategory === cat;
+                const cls = active
+                    ? 'bg-jebew-red text-white shadow-md border-jebew-red'
+                    : 'bg-jebew-cream/70 text-jebew-black hover:bg-jebew-orange/20 border-transparent';
+                const escaped = cat.replace(/\\/g, '\\\\').replace(/'/g, "\\'");
+                return `<button type="button" onclick="selectCategory('${escaped}')" class="shrink-0 px-4 py-2 rounded-xl font-heading font-bold text-xs sm:text-sm border-2 transition-all ${cls}">${cat}</button>`;
+            }).join('');
+        }
+
+        function selectCategory(cat) {
+            activeCategory = cat;
+            renderCategoryFilters();
+            renderBuyerMenu();
+        }
+
+        function clearSearch() {
+            document.getElementById('menuSearchInput').value = '';
+            renderBuyerMenu();
+        }
+
+        function resetMenuFilter() {
+            activeCategory = 'Semua';
+            document.getElementById('menuSearchInput').value = '';
+            renderCategoryFilters();
+            renderBuyerMenu();
+        }
+
+        function renderBuyerMenu() {
+            const q = (document.getElementById('menuSearchInput').value || '').toLowerCase().trim();
+            document.getElementById('clearSearchBtn').classList.toggle('hidden', q.length === 0);
+
+            const items = appData.menus.filter(m => {
+                const matchCat = activeCategory === 'Semua' || m.category === activeCategory;
+                const matchQ = !q || m.name.toLowerCase().includes(q) || m.description.toLowerCase().includes(q) || m.category.toLowerCase().includes(q);
+                return matchCat && matchQ;
+            });
+
+            const grid = document.getElementById('menuGrid');
+            const empty = document.getElementById('emptyMenuState');
+
+            if (items.length === 0) {
+                grid.innerHTML = '';
+                empty.classList.remove('hidden');
+                return;
+            }
+
+            empty.classList.add('hidden');
+            grid.innerHTML = items.map(item => {
+                const avail = Boolean(item.available) && Number(item.stock || 0) > 0;
+                const minSeblak = (appData.toppings || [])
+                    .filter(t => (t.target === 'seblak' || t.target === 'all') && t.available !== false)
+                    .reduce((min, t) => Math.min(min, Number(t.price || 0)), Infinity);
+                const seblakLabel = Number.isFinite(minSeblak) ? `Mulai ${formatRupiah(minSeblak)}` : 'Sesuai Topping';
+
+                const priceHtml = item.isSeblakPrasmanan
+                    ? `<span class="text-xs sm:text-sm font-extrabold text-jebew-orange">${seblakLabel}</span>`
+                    : `<span class="font-heading text-xl font-bold text-jebew-red">${formatRupiah(item.price)}</span>`;
+
+                let badgeHtml = '';
+                if (item.badge) {
+                    let badgeCls = 'bg-jebew-orange text-white';
+                    if (item.badge === 'Best Seller') badgeCls = 'bg-jebew-red text-white';
+                    if (item.badge === 'Hemat') badgeCls = 'bg-green-600 text-white';
+                    if (item.badge === 'Baru') badgeCls = 'bg-blue-600 text-white';
+                    badgeHtml = `<span class="absolute top-3 left-3 ${badgeCls} text-[11px] font-extrabold px-3 py-1 rounded-full shadow-md uppercase">${item.badge}</span>`;
+                }
+
+                const metaBadge = item.spicyMax > 0
+                    ? `<span class="inline-flex items-center gap-1 text-[11px] font-extrabold text-jebew-red bg-red-50 px-2.5 py-0.5 rounded-lg border border-red-200"><i class="fa-solid fa-fire"></i> Pedas 1-5</span>`
+                    : `<span class="inline-flex items-center gap-1 text-[11px] font-bold text-gray-600 bg-gray-100 px-2.5 py-0.5 rounded-lg">${item.category}</span>`;
+
+                return `
+                <div class="bg-white rounded-3xl overflow-hidden shadow-md hover:shadow-xl border border-jebew-orange/15 flex flex-col transition-all duration-300 ${!avail ? 'opacity-65 grayscale-[35%]' : 'hover:-translate-y-1'}">
+                    <div class="relative aspect-[4/3] bg-gray-100 overflow-hidden">
+                        <img src="${item.image}" onerror="this.src='https://placehold.co/600x450/FF7A00/FFFFFF?text=${encodeURIComponent(item.name)}'" alt="${item.name}" class="w-full h-full object-cover">
+                        ${badgeHtml}
+                        <span class="absolute top-3 right-3 px-2.5 py-1 rounded-full text-[11px] font-extrabold shadow ${avail ? 'bg-white/95 text-green-700' : 'bg-jebew-black text-white'}">
+                            ${avail ? '● Tersedia' : '✕ Habis'}
+                        </span>
+                    </div>
+                    <div class="p-4 sm:p-5 flex-1 flex flex-col justify-between space-y-4">
+                        <div class="space-y-2">
+                            <div class="flex items-center justify-between gap-2">
+                                ${metaBadge}
+                                <span class="text-[11px] font-bold text-gray-400">Stok: ${item.stock}</span>
+                            </div>
+                            <h3 class="font-heading text-lg sm:text-xl font-bold text-jebew-black leading-snug">${item.name}</h3>
+                            <p class="text-xs sm:text-sm text-gray-600 line-clamp-2 leading-relaxed">${item.description}</p>
+                        </div>
+                        <div class="pt-2 border-t border-gray-100 flex items-center justify-between gap-2">
+                            <div>${priceHtml}</div>
+                            <button type="button" onclick="openItemModal('${item.id}')" ${!avail ? 'disabled' : ''}
+                                    class="shrink-0 px-4 py-2.5 rounded-2xl font-heading font-bold text-xs sm:text-sm transition-all flex items-center gap-1.5 ${avail ? 'bg-jebew-red hover:bg-jebew-red-dark text-white shadow-md active:scale-95' : 'bg-gray-300 text-gray-500 cursor-not-allowed'}">
+                                <i class="fa-solid fa-plus"></i>
+                                <span>${avail ? 'Pesan' : 'Habis'}</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                `;
+            }).join('');
+        }
+
+        // ==================== TESTIMONI & ULASAN PEMBELI ====================
+        function renderTestimonials() {
+            const list = appData.testimonials || [];
+            const total = list.length;
+            const avg = total > 0
+                ? (list.reduce((acc, item) => acc + Number(item.rating || 5), 0) / total).toFixed(1)
+                : '4.9';
+
+            document.getElementById('heroAvgRating').textContent = avg;
+            document.getElementById('heroReviewCountText').textContent = `dari ${500 + total}+ pelanggan`;
+            document.getElementById('sectionAvgRating').textContent = avg;
+            document.getElementById('sectionReviewTotal').textContent = `(${total} ulasan)`;
+
+            document.getElementById('testimonialsGrid').innerHTML = list.map(t => {
+                const stars = Math.min(5, Math.max(1, Number(t.rating || 5)));
+                const starIcons = Array.from({ length: 5 }, (_, idx) =>
+                    `<i class="fa-solid fa-star ${idx < stars ? 'text-yellow-400' : 'text-gray-200'}"></i>`
+                ).join('');
+
+                return `
+                <div class="bg-white p-5 rounded-3xl shadow-md border border-jebew-orange/15 flex flex-col justify-between space-y-4">
+                    <div class="space-y-3">
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center gap-1 text-sm">${starIcons}</div>
+                            <span class="text-xs font-extrabold text-jebew-orange">${stars}.0</span>
+                        </div>
+                        <p class="text-sm text-gray-700 italic leading-relaxed">"${t.text}"</p>
+                    </div>
+                    <div class="flex items-center gap-3 pt-3 border-t border-gray-100">
+                        <img src="${t.avatar}" onerror="this.src='https://ui-avatars.com/api/?name=${encodeURIComponent(t.name)}&background=D92B2B&color=fff'" alt="${t.name}" class="w-11 h-11 rounded-full object-cover border-2 border-jebew-orange">
+                        <div class="min-w-0">
+                            <p class="font-heading font-bold text-sm text-jebew-black truncate">${t.name}</p>
+                            <p class="text-xs font-semibold text-gray-500 truncate">${t.role || 'Pembeli'}</p>
+                        </div>
+                    </div>
+                </div>
+                `;
+            }).join('');
+        }
+
+        function toggleBuyerReviewForm() {
+            const box = document.getElementById('buyerReviewFormBox');
+            box.classList.toggle('hidden');
+            if (!box.classList.contains('hidden')) {
+                setBuyerRating(5);
+                box.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+        }
+
+        function setBuyerRating(rating) {
+            document.getElementById('buyerRevRating').value = rating;
+            const notes = {
+                1: '1 / 5 - Kurang cocok',
+                2: '2 / 5 - Cukup enak',
+                3: '3 / 5 - Enak',
+                4: '4 / 5 - Mantap',
+                5: '5 / 5 - Pedas Nampol!'
+            };
+            document.getElementById('buyerRatingLabel').textContent = notes[rating] || '5 / 5';
+            document.querySelectorAll('.star-pick-btn').forEach(btn => {
+                const s = Number(btn.dataset.star);
+                btn.classList.toggle('text-yellow-400', s <= rating);
+                btn.classList.toggle('text-gray-300', s > rating);
+            });
+        }
+
+        function handleBuyerSubmitReview(e) {
+            e.preventDefault();
+            const name = document.getElementById('buyerRevName').value.trim();
+            const menu = document.getElementById('buyerRevMenu').value.trim();
+            const rating = Number(document.getElementById('buyerRevRating').value || 5);
+            const text = document.getElementById('buyerRevText').value.trim();
+
+            if (!name || !text) {
+                showToast('Nama dan ulasan wajib diisi!', 'error');
+                return;
+            }
+
+            appData.testimonials.unshift({
+                id: 'rev_' + Date.now(),
+                name,
+                role: menu || 'Pembeli Warung',
+                rating,
+                text,
+                avatar: `https://ui-avatars.com/api/?name=${encodeURIComponent(name)}&background=D92B2B&color=fff`
+            });
+
+            document.getElementById('buyerRevName').value = '';
+            document.getElementById('buyerRevMenu').value = '';
+            document.getElementById('buyerRevText').value = '';
+            setBuyerRating(5);
+            document.getElementById('buyerReviewFormBox').classList.add('hidden');
+
+            saveAppData();
+            showToast('Ulasan kamu berhasil disimpan!');
+        }
+
+        // ==================== PROMO POPUP ====================
+        function openPromoPopup() {
+            if (appData.promo && appData.promo.active) {
+                document.getElementById('promoPopupModal').classList.remove('hidden');
+            }
+        }
+
+        function closePromoPopup() {
+            document.getElementById('promoPopupModal').classList.add('hidden');
+        }
+
+        // ==================== ITEM CUSTOMIZATION MODAL ====================
+        function getToppingsForMenu(item) {
+            const allToppings = (appData.toppings || []).filter(t => t.available !== false);
+            const catLower = String(item.category || '').toLowerCase();
+            const nameLower = String(item.name || '').toLowerCase();
+
+            let key = 'other';
+            if (item.isSeblakPrasmanan || catLower.includes('seblak')) {
+                key = 'seblak';
+            } else if (catLower.includes('mie') || nameLower.includes('mie jebew')) {
+                key = 'mie_jebew';
+            } else if (catLower.includes('pangsit') || nameLower.includes('pangsit')) {
+                key = 'pangsit';
+            } else if (catLower.includes('bakar') || nameLower.includes('bakar')) {
+                key = 'bakaran';
+            }
+
+            return allToppings.filter(t => t.target === 'all' || t.target === key);
+        }
+
+        function openItemModal(menuId) {
+            const item = appData.menus.find(m => m.id === menuId);
+            if (!item || !item.available || Number(item.stock || 0) <= 0) return;
+
+            currentModalItem = item;
+            currentModalQty = 1;
+
+            document.getElementById('modalItemImg').src = item.image;
+            document.getElementById('modalItemCat').textContent = item.category;
+            document.getElementById('modalItemName').textContent = item.name;
+            document.getElementById('modalItemDesc').textContent = item.description;
+            document.getElementById('modalItemBasePrice').textContent = item.isSeblakPrasmanan
+                ? 'Harga dihitung otomatis dari topping pilihan'
+                : formatRupiah(item.price);
+            document.getElementById('modalItemNote').value = '';
+            document.getElementById('modalQtyDisplay').textContent = '1';
+
+            const spicySec = document.getElementById('spicyLevelSection');
+            const brothSec = document.getElementById('seblakBrothSection');
+            const seblakTopSec = document.getElementById('seblakToppingsSection');
+            const extraTopSec = document.getElementById('extraToppingsSection');
+            const bbqSec = document.getElementById('bbqSauceSection');
+
+            spicySec.classList.add('hidden');
+            brothSec.classList.add('hidden');
+            seblakTopSec.classList.add('hidden');
+            extraTopSec.classList.add('hidden');
+            bbqSec.classList.add('hidden');
+
+            if (item.spicyMax > 0) {
+                spicySec.classList.remove('hidden');
+                document.getElementById('spicyLevelOptions').innerHTML = SPICY_LEVELS.map((s, i) => `
+                    <label class="cursor-pointer">
+                        <input type="radio" name="spicyLevel" value="${s.label}" ${i === 1 ? 'checked' : ''} class="peer sr-only">
+                        <div class="p-2.5 rounded-2xl border-2 border-gray-200 peer-checked:border-jebew-red peer-checked:bg-jebew-red/10 transition-all">
+                            <p class="font-bold text-xs sm:text-sm text-jebew-black">🌶️ ${s.label}</p>
+                            <p class="text-[11px] text-gray-500">${s.desc}</p>
+                        </div>
+                    </label>
+                `).join('');
+            }
+
+            const matchedToppings = getToppingsForMenu(item);
+
+            if (item.isSeblakPrasmanan || String(item.category || '').toLowerCase().includes('seblak')) {
+                brothSec.classList.remove('hidden');
+                seblakTopSec.classList.remove('hidden');
+                let prechecked = 0;
+                document.getElementById('seblakToppingsGrid').innerHTML = matchedToppings.length > 0
+                    ? matchedToppings.map(t => {
+                        const checkedAttr = prechecked < 2 ? 'checked' : '';
+                        if (prechecked < 2) prechecked++;
+                        return `
+                        <label class="cursor-pointer">
+                            <input type="checkbox" name="seblakTopping" value="${t.name}" data-price="${t.price}" ${checkedAttr} onchange="recalcModalPrice()" class="peer sr-only">
+                            <div class="p-2.5 rounded-2xl border-2 border-gray-200 peer-checked:border-jebew-orange peer-checked:bg-jebew-orange/10 flex items-center justify-between transition-all">
+                                <span class="font-bold text-xs text-jebew-black">${t.name}</span>
+                                <span class="font-extrabold text-xs text-jebew-red">+${formatRupiah(t.price)}</span>
+                            </div>
+                        </label>
+                        `;
+                    }).join('')
+                    : '<p class="text-xs text-gray-500 col-span-2">Belum ada topping seblak tersedia.</p>';
+            } else if (matchedToppings.length > 0) {
+                extraTopSec.classList.remove('hidden');
+                document.getElementById('extraToppingsLabel').textContent = `Topping Tambahan (${item.name})`;
+                document.getElementById('extraToppingsGrid').innerHTML = matchedToppings.map(t => `
+                    <label class="cursor-pointer">
+                        <input type="checkbox" name="extraTopping" value="${t.name}" data-price="${t.price}" onchange="recalcModalPrice()" class="peer sr-only">
+                        <div class="p-2.5 rounded-2xl border-2 border-gray-200 peer-checked:border-jebew-orange peer-checked:bg-jebew-orange/10 flex items-center justify-between transition-all">
+                            <span class="font-bold text-xs text-jebew-black">${t.name}</span>
+                            <span class="font-extrabold text-xs text-jebew-red">+${formatRupiah(t.price)}</span>
+                        </div>
+                    </label>
+                `).join('');
+            }
+
+            if (String(item.category || '').toLowerCase().includes('bakar')) {
+                bbqSec.classList.remove('hidden');
+                document.getElementById('bbqSauceGrid').innerHTML = BBQ_SAUCES.map((sauce, i) => `
+                    <label class="cursor-pointer">
+                        <input type="radio" name="bbqSauce" value="${sauce}" ${i === 0 ? 'checked' : ''} class="peer sr-only">
+                        <div class="p-2.5 rounded-2xl border-2 border-gray-200 peer-checked:border-jebew-red peer-checked:bg-jebew-red/10 text-center font-bold text-xs sm:text-sm transition-all">
+                            🔥 ${sauce}
+                        </div>
+                    </label>
+                `).join('');
+            }
+
+            recalcModalPrice();
+            document.getElementById('itemModal').classList.remove('hidden');
+        }
+
+        function closeItemModal() {
+            document.getElementById('itemModal').classList.add('hidden');
+            currentModalItem = null;
+        }
+
+        function changeModalQty(delta) {
+            if (!currentModalItem) return;
+            const maxStock = Number(currentModalItem.stock || 1);
+            const next = currentModalQty + delta;
+            if (next >= 1 && next <= maxStock) {
+                currentModalQty = next;
+                document.getElementById('modalQtyDisplay').textContent = String(currentModalQty);
+                recalcModalPrice();
+            }
+        }
+
+        function recalcModalPrice() {
+            if (!currentModalItem) return 0;
+            let unitPrice = Number(currentModalItem.price || 0);
+            document.querySelectorAll('input[name="seblakTopping"]:checked, input[name="extraTopping"]:checked').forEach(el => {
+                unitPrice += Number(el.dataset.price || 0);
+            });
+            document.getElementById('modalCalculatedTotal').textContent = formatRupiah(unitPrice * currentModalQty);
+            return unitPrice;
+        }
+
+        function addConfiguredItemToCart() {
+            if (!currentModalItem) return;
+
+            const isSeblak = Boolean(currentModalItem.isSeblakPrasmanan) || String(currentModalItem.category || '').toLowerCase().includes('seblak');
+            const seblakTops = Array.from(document.querySelectorAll('input[name="seblakTopping"]:checked')).map(el => el.value);
+
+            if (isSeblak && seblakTops.length === 0) {
+                showToast('Pilih minimal 1 topping untuk Seblak Prasmanan!', 'error');
+                return;
+            }
+
+            const unitPrice = recalcModalPrice();
+            const details = [];
+
+            if (currentModalItem.spicyMax > 0) {
+                const spicy = document.querySelector('input[name="spicyLevel"]:checked')?.value;
+                if (spicy) details.push(spicy);
+            }
+
+            if (isSeblak) {
+                const broth = document.querySelector('input[name="seblakBroth"]:checked')?.value;
+                if (broth) details.push(broth);
+                details.push('Topping: ' + seblakTops.join(', '));
+            }
+
+            const extraTops = Array.from(document.querySelectorAll('input[name="extraTopping"]:checked')).map(el => el.value);
+            if (extraTops.length > 0) {
+                details.push('Topping: ' + extraTops.join(', '));
+            }
+
+            if (String(currentModalItem.category || '').toLowerCase().includes('bakar')) {
+                const sauce = document.querySelector('input[name="bbqSauce"]:checked')?.value;
+                if (sauce) details.push('Bumbu: ' + sauce);
+            }
+
+            const note = document.getElementById('modalItemNote').value.trim();
+            if (note) details.push('Catatan: ' + note);
+
+            const detailText = details.join(' | ');
+            const idx = cart.findIndex(c => c.menuId === currentModalItem.id && c.detailText === detailText);
+            if (idx > -1) {
+                cart[idx].qty += currentModalQty;
+            } else {
+                cart.push({
+                    menuId: currentModalItem.id,
+                    name: currentModalItem.name,
+                    unitPrice,
+                    qty: currentModalQty,
+                    detailText,
+                    image: currentModalItem.image
+                });
+            }
+
+            closeItemModal();
+            updateCartUI();
+            showToast(`${currentModalItem.name} masuk keranjang!`);
+        }
+
+        // ==================== CART & WHATSAPP CHECKOUT ====================
+        function updateCartUI() {
+            const totalItems = cart.reduce((s, item) => s + Number(item.qty || 0), 0);
+            const totalPrice = cart.reduce((s, item) => s + Number(item.unitPrice || 0) * Number(item.qty || 0), 0);
+
+            document.getElementById('headerCartBadge').textContent = String(totalItems);
+
+            const floatingBar = document.getElementById('floatingCartBar');
+            if (totalItems > 0) {
+                floatingBar.classList.remove('hidden');
+                document.getElementById('cartBadgeCount').textContent = String(totalItems);
+                document.getElementById('cartBarTotal').textContent = formatRupiah(totalPrice);
+            } else {
+                floatingBar.classList.add('hidden');
+            }
+
+            const container = document.getElementById('cartItemsContainer');
+            const formSec = document.getElementById('checkoutFormSection');
+            const footerSec = document.getElementById('cartFooterSection');
+
+            if (cart.length === 0) {
+                container.innerHTML = `
+                    <div class="text-center py-12 space-y-3">
+                        <div class="text-5xl">🛒</div>
+                        <h4 class="font-heading text-lg font-bold text-jebew-black">Keranjang Kosong</h4>
+                        <p class="text-xs text-gray-500">Pilih menu favoritmu terlebih dahulu.</p>
+                        <button type="button" onclick="closeCartDrawer()" class="px-5 py-2.5 rounded-xl bg-jebew-red text-white font-bold text-xs">Lihat Menu</button>
+                    </div>
+                `;
+                formSec.classList.add('hidden');
+                footerSec.classList.add('hidden');
+                return;
+            }
+
+            formSec.classList.remove('hidden');
+            footerSec.classList.remove('hidden');
+            document.getElementById('drawerTotalItems').textContent = `${totalItems} item`;
+            document.getElementById('drawerTotalPrice').textContent = formatRupiah(totalPrice);
+
+            container.innerHTML = cart.map((item, i) => `
+                <div class="bg-jebew-cream/60 p-3.5 rounded-2xl border border-jebew-orange/20 flex gap-3">
+                    <img src="${item.image}" alt="${item.name}" class="w-16 h-16 rounded-xl object-cover shrink-0">
+                    <div class="flex-1 min-w-0">
+                        <div class="flex items-start justify-between gap-2">
+                            <h5 class="font-heading font-bold text-sm text-jebew-black leading-tight">${item.name}</h5>
+                            <button type="button" onclick="removeCartItem(${i})" class="text-gray-400 hover:text-jebew-red text-xs p-1" title="Hapus">
+                                <i class="fa-solid fa-trash"></i>
+                            </button>
+                        </div>
+                        ${item.detailText ? `<p class="text-[11px] text-gray-600 mt-1 leading-snug">${item.detailText}</p>` : ''}
+                        <div class="flex items-center justify-between mt-2.5">
+                            <span class="font-extrabold text-xs sm:text-sm text-jebew-red">${formatRupiah(item.unitPrice * item.qty)}</span>
+                            <div class="flex items-center bg-white rounded-xl border border-gray-200 p-0.5">
+                                <button type="button" onclick="changeCartQty(${i}, -1)" class="w-7 h-7 rounded-lg hover:bg-jebew-orange hover:text-white font-bold text-sm">-</button>
+                                <span class="w-7 text-center font-bold text-xs">${item.qty}</span>
+                                <button type="button" onclick="changeCartQty(${i}, 1)" class="w-7 h-7 rounded-lg hover:bg-jebew-orange hover:text-white font-bold text-sm">+</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function changeCartQty(idx, delta) {
+            if (!cart[idx]) return;
+            cart[idx].qty += delta;
+            if (cart[idx].qty <= 0) cart.splice(idx, 1);
+            updateCartUI();
+        }
+
+        function removeCartItem(idx) {
+            cart.splice(idx, 1);
+            updateCartUI();
+            showToast('Item dihapus dari keranjang');
+        }
+
+        function openCartDrawer() {
+            updateCartUI();
+            document.getElementById('cartDrawer').classList.remove('hidden');
+        }
+
+        function closeCartDrawer() {
+            document.getElementById('cartDrawer').classList.add('hidden');
+        }
+
+        function toggleDeliveryAddress() {
+            const type = document.querySelector('input[name="orderType"]:checked')?.value;
+            document.getElementById('deliveryAddressBox').classList.toggle('hidden', type !== 'Delivery');
+        }
+
+        function checkoutToWhatsApp() {
+            if (cart.length === 0) return;
+
+            const custName = document.getElementById('custNameInput').value.trim();
+            if (!custName) {
+                showToast('Isi nama pembeli terlebih dahulu!', 'error');
+                document.getElementById('custNameInput').focus();
+                return;
+            }
+
+            const orderType = document.querySelector('input[name="orderType"]:checked')?.value || 'Makan di Tempat';
+            const custAddress = document.getElementById('custAddressInput').value.trim();
+            if (orderType === 'Delivery' && !custAddress) {
+                showToast('Isi alamat pengiriman untuk pesanan Delivery!', 'error');
+                document.getElementById('custAddressInput').focus();
+                return;
+            }
+
+            const note = document.getElementById('custNoteInput').value.trim();
+            const totalItems = cart.reduce((s, item) => s + item.qty, 0);
+            const totalPrice = cart.reduce((s, item) => s + item.unitPrice * item.qty, 0);
+
+            let msg = `*PESANAN BARU - ${appData.warungInfo.name}*\n`;
+            msg += `--------------------------------\n`;
+            msg += `Nama: ${custName}\n`;
+            msg += `Tipe Pesanan: ${orderType}\n`;
+            if (orderType === 'Delivery') {
+                msg += `Alamat: ${custAddress}\n`;
+            }
+            msg += `--------------------------------\n\n`;
+            msg += `*RINCIAN MENU:*\n`;
+            cart.forEach((item, index) => {
+                msg += `${index + 1}. ${item.name} (${item.qty}x) - ${formatRupiah(item.unitPrice * item.qty)}\n`;
+                if (item.detailText) {
+                    msg += `   [${item.detailText}]\n`;
+                }
+            });
+            msg += `\n--------------------------------\n`;
+            msg += `Total Item: ${totalItems}\n`;
+            msg += `Total Bayar: *${formatRupiah(totalPrice)}*\n`;
+            if (note) {
+                msg += `Catatan: ${note}\n`;
+            }
+            msg += `--------------------------------\n`;
+            msg += `Terima kasih!`;
+
+            const waPhone = formatWaNumber(appData.warungInfo.whatsapp);
+            const url = `https://wa.me/${waPhone}?text=${encodeURIComponent(msg)}`;
+            window.open(url, '_blank', 'noopener,noreferrer');
+        }
+
+        // ==================== ADMIN AUTH & DASHBOARD ====================
+        function renderAdminAuthState() {
+            const loginEl = document.getElementById('adminLoginScreen');
+            const dashEl = document.getElementById('adminDashboardScreen');
+
+            if (isAdminLoggedIn) {
+                loginEl.classList.add('hidden');
+                dashEl.classList.remove('hidden');
+                renderAdminDashboard();
+            } else {
+                loginEl.classList.remove('hidden');
+                dashEl.classList.add('hidden');
+                document.getElementById('loginErrorBox').classList.add('hidden');
+            }
+        }
+
+        function handleAdminLogin(e) {
+            e.preventDefault();
+            const u = document.getElementById('adminUsernameInput').value.trim();
+            const p = document.getElementById('adminPasswordInput').value;
+
+            if (u === appData.adminAuth.username && p === appData.adminAuth.password) {
+                isAdminLoggedIn = true;
+                sessionStorage.setItem(SESSION_KEY, 'true');
+                document.getElementById('loginErrorBox').classList.add('hidden');
+                renderAdminAuthState();
+                showToast('Login Admin berhasil!');
+            } else {
+                document.getElementById('loginErrorBox').classList.remove('hidden');
+            }
+        }
+
+        function handleAdminLogout() {
+            isAdminLoggedIn = false;
+            sessionStorage.removeItem(SESSION_KEY);
+            document.getElementById('adminUsernameInput').value = '';
+            document.getElementById('adminPasswordInput').value = '';
+            switchMode('buyer');
+            showToast('Logout berhasil');
+        }
+
+        function togglePasswordVisibility() {
+            const input = document.getElementById('adminPasswordInput');
+            const icon = document.getElementById('eyeIcon');
+            if (input.type === 'password') {
+                input.type = 'text';
+                icon.className = 'fa-solid fa-eye-slash';
+            } else {
+                input.type = 'password';
+                icon.className = 'fa-solid fa-eye';
+            }
+        }
+
+        function switchAdminTab(tab) {
+            document.querySelectorAll('.admin-tab-content').forEach(el => el.classList.add('hidden'));
+            document.getElementById(`adminTab-${tab}`).classList.remove('hidden');
+
+            document.querySelectorAll('.admin-tab-btn').forEach(btn => {
+                btn.className = 'admin-tab-btn shrink-0 px-4 py-2.5 rounded-2xl font-heading font-bold text-sm bg-white text-jebew-black hover:bg-jebew-orange/10';
+            });
+            document.getElementById(`tabBtn-${tab}`).className = 'admin-tab-btn shrink-0 px-4 py-2.5 rounded-2xl font-heading font-bold text-sm bg-jebew-red text-white shadow-md';
+
+            renderAdminDashboard();
+        }
+
+        function renderAdminDashboard() {
+            document.getElementById('statTotalMenu').textContent = String(appData.menus.length);
+            document.getElementById('statTotalCategory').textContent = String(appData.categories.length);
+            const best = appData.menus.find(m => m.badge === 'Best Seller') || appData.menus[0];
+            document.getElementById('statBestSeller').textContent = best ? best.name : '-';
+            const habisCount = appData.menus.filter(m => !m.available || Number(m.stock || 0) <= 0).length;
+            document.getElementById('statOutOfStock').textContent = String(habisCount);
+
+            document.getElementById('quickStockList').innerHTML = appData.menus.map(m => {
+                const avail = Boolean(m.available) && Number(m.stock || 0) > 0;
+                return `
+                <div class="py-3 flex items-center justify-between gap-3">
+                    <div class="min-w-0">
+                        <p class="font-bold text-sm text-jebew-black truncate">${m.name}</p>
+                        <p class="text-xs text-gray-500">${m.category} • Stok: <span class="font-bold text-jebew-black">${m.stock}</span></p>
+                    </div>
+                    <button type="button" onclick="toggleMenuStatus('${m.id}')" class="shrink-0 px-3.5 py-1.5 rounded-xl font-bold text-xs transition-colors ${avail ? 'bg-green-100 text-green-700 hover:bg-green-200' : 'bg-red-100 text-jebew-red hover:bg-red-200'}">
+                        ${avail ? '● Tersedia' : '✕ Habis'}
+                    </button>
+                </div>
+                `;
+            }).join('');
+
+            const catFilter = document.getElementById('adminMenuCatFilter');
+            const prevCat = catFilter.value;
+            catFilter.innerHTML = `<option value="Semua">Semua Kategori</option>` + appData.categories.map(c => `<option value="${c}">${c}</option>`).join('');
+            catFilter.value = appData.categories.includes(prevCat) ? prevCat : 'Semua';
+
+            renderAdminMenus();
+            renderAdminToppings();
+            renderAdminCategories();
+            loadPromoForm();
+            renderAdminTestimonials();
+            loadSettingsForms();
+        }
+
+        // ==================== ADMIN MENU CRUD ====================
+        function renderAdminMenus() {
+            const q = (document.getElementById('adminMenuSearch').value || '').toLowerCase().trim();
+            const cat = document.getElementById('adminMenuCatFilter').value;
+
+            const list = appData.menus.filter(m => {
+                const matchCat = cat === 'Semua' || m.category === cat;
+                const matchQ = !q || m.name.toLowerCase().includes(q) || m.category.toLowerCase().includes(q);
+                return matchCat && matchQ;
+            });
+
+            document.getElementById('adminMenuGrid').innerHTML = list.map(m => {
+                const avail = Boolean(m.available) && Number(m.stock || 0) > 0;
+                return `
+                <div class="bg-white rounded-3xl p-4 shadow-sm border border-gray-200 flex flex-col justify-between space-y-4">
+                    <div class="flex gap-3.5">
+                        <img src="${m.image}" onerror="this.src='https://placehold.co/150x150/FF7A00/FFFFFF?text=Menu'" alt="${m.name}" class="w-20 h-20 rounded-2xl object-cover shrink-0 border border-gray-100">
+                        <div class="min-w-0 flex-1">
+                            <span class="inline-block bg-jebew-cream text-jebew-orange text-[10px] font-extrabold px-2 py-0.5 rounded-md uppercase">${m.category}</span>
+                            <h4 class="font-heading font-bold text-base text-jebew-black truncate mt-0.5">${m.name}</h4>
+                            <p class="font-extrabold text-sm text-jebew-red">${m.isSeblakPrasmanan ? 'Sesuai Topping' : formatRupiah(m.price)}</p>
+                            <div class="flex flex-wrap items-center gap-2 mt-1.5">
+                                <button type="button" onclick="toggleMenuStatus('${m.id}')" class="px-2.5 py-1 rounded-lg text-[11px] font-extrabold ${avail ? 'bg-green-100 text-green-700' : 'bg-red-100 text-jebew-red'}">
+                                    ${avail ? 'Tersedia' : 'Habis'}
+                                </button>
+                                <div class="flex items-center bg-gray-100 rounded-lg px-1.5 py-0.5 text-xs font-bold">
+                                    <button type="button" onclick="adjustMenuStock('${m.id}', -5)" class="px-1.5 text-gray-600 hover:text-jebew-red">-</button>
+                                    <span class="px-1">Stok: ${m.stock}</span>
+                                    <button type="button" onclick="adjustMenuStock('${m.id}', 5)" class="px-1.5 text-gray-600 hover:text-green-600">+</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="pt-3 border-t border-gray-100 flex items-center gap-2">
+                        <button type="button" onclick="openMenuFormModal('${m.id}')" class="flex-1 py-2 rounded-xl bg-jebew-cream hover:bg-jebew-orange hover:text-white text-jebew-black font-bold text-xs transition-colors">
+                            <i class="fa-solid fa-pen-to-square mr-1"></i> Edit
+                        </button>
+                        <button type="button" onclick="confirmDeleteMenu('${m.id}')" class="py-2 px-3.5 rounded-xl bg-red-50 hover:bg-jebew-red text-jebew-red hover:text-white font-bold text-xs transition-colors">
+                            <i class="fa-solid fa-trash"></i>
+                        </button>
+                    </div>
+                </div>
+                `;
+            }).join('');
+        }
+
+        function toggleMenuStatus(id) {
+            const menu = appData.menus.find(m => m.id === id);
+            if (!menu) return;
+            menu.available = !menu.available;
+            if (menu.available && Number(menu.stock || 0) <= 0) menu.stock = 20;
+            saveAppData();
+            showToast(`Status "${menu.name}" diubah menjadi ${menu.available ? 'Tersedia' : 'Habis'}`);
+        }
+
+        function adjustMenuStock(id, delta) {
+            const menu = appData.menus.find(m => m.id === id);
+            if (!menu) return;
+            menu.stock = Math.max(0, Number(menu.stock || 0) + delta);
+            menu.available = menu.stock > 0;
+            saveAppData();
+        }
+
+        function openMenuFormModal(editId = null) {
+            const catSel = document.getElementById('menuCategoryInput');
+            catSel.innerHTML = appData.categories.map(c => `<option value="${c}">${c}</option>`).join('');
+
+            if (editId) {
+                const m = appData.menus.find(item => item.id === editId);
+                if (!m) return;
+                document.getElementById('menuFormModalTitle').textContent = 'Edit Menu';
+                document.getElementById('editMenuId').value = m.id;
+                document.getElementById('menuNameInput').value = m.name;
+                document.getElementById('menuCategoryInput').value = m.category;
+                document.getElementById('menuPriceInput').value = String(m.price || 0);
+                document.getElementById('menuDescInput').value = m.description;
+                document.getElementById('menuSpicyInput').value = m.spicyMax > 0 ? '5' : '0';
+                document.getElementById('menuBadgeInput').value = m.badge || '';
+                document.getElementById('menuStockInput').value = String(m.stock || 0);
+                document.getElementById('menuAvailableInput').value = String(Boolean(m.available));
+                document.getElementById('menuImageUrl').value = m.image;
+                document.getElementById('menuImagePreview').src = m.image;
+            } else {
+                document.getElementById('menuFormModalTitle').textContent = 'Tambah Menu Baru';
+                document.getElementById('editMenuId').value = '';
+                document.getElementById('menuNameInput').value = '';
+                document.getElementById('menuPriceInput').value = '';
+                document.getElementById('menuDescInput').value = '';
+                document.getElementById('menuSpicyInput').value = '5';
+                document.getElementById('menuBadgeInput').value = 'Baru';
+                document.getElementById('menuStockInput').value = '30';
+                document.getElementById('menuAvailableInput').value = 'true';
+                const defImg = 'https://images.unsplash.com/photo-1569718212165-3a8278d5f624?auto=format&fit=crop&w=700&q=80';
+                document.getElementById('menuImageUrl').value = defImg;
+                document.getElementById('menuImagePreview').src = defImg;
+            }
+            document.getElementById('menuImageFile').value = '';
+            document.getElementById('menuFormModal').classList.remove('hidden');
+        }
+
+        function closeMenuFormModal() {
+            document.getElementById('menuFormModal').classList.add('hidden');
+        }
+
+        function handleImageFileUpload(e) {
+            const file = e.target.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = function(ev) {
+                const img = new Image();
+                img.onload = function() {
+                    const canvas = document.createElement('canvas');
+                    const maxW = 600;
+                    const scale = Math.min(1, maxW / img.width);
+                    canvas.width = img.width * scale;
+                    canvas.height = img.height * scale;
+                    const ctx = canvas.getContext('2d');
+                    ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+                    const dataUrl = canvas.toDataURL('image/jpeg', 0.8);
+                    document.getElementById('menuImageUrl').value = dataUrl;
+                    document.getElementById('menuImagePreview').src = dataUrl;
+                };
+                img.src = ev.target.result;
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function previewImageUrl(url) {
+            if (url && url.trim()) {
+                document.getElementById('menuImagePreview').src = url.trim();
+            }
+        }
+
+        function handleSaveMenu(e) {
+            e.preventDefault();
+            const editId = document.getElementById('editMenuId').value;
+            const name = document.getElementById('menuNameInput').value.trim();
+            const category = document.getElementById('menuCategoryInput').value;
+            const price = Number(document.getElementById('menuPriceInput').value || 0);
+            const description = document.getElementById('menuDescInput').value.trim();
+            const spicyMax = Number(document.getElementById('menuSpicyInput').value || 0);
+            const badge = document.getElementById('menuBadgeInput').value;
+            const stock = Number(document.getElementById('menuStockInput').value || 0);
+            const available = document.getElementById('menuAvailableInput').value === 'true';
+            const image = document.getElementById('menuImageUrl').value.trim() || 'https://placehold.co/600x450/D92B2B/FFFFFF?text=' + encodeURIComponent(name);
+
+            if (editId) {
+                const idx = appData.menus.findIndex(m => m.id === editId);
+                if (idx > -1) {
+                    appData.menus[idx] = { ...appData.menus[idx], name, category, price, description, spicyMax, badge, stock, available, image };
+                }
+                showToast('Menu berhasil diperbarui!');
+            } else {
+                appData.menus.unshift({
+                    id: 'm_' + Date.now(),
+                    name, category, price, description, spicyMax, badge, stock, available, image
+                });
+                showToast('Menu baru berhasil ditambahkan!');
+            }
+
+            saveAppData();
+            closeMenuFormModal();
+        }
+
+        function confirmDeleteMenu(id) {
+            const m = appData.menus.find(item => item.id === id);
+            if (!m) return;
+            document.getElementById('confirmModalTitle').textContent = 'Yakin hapus menu ini?';
+            document.getElementById('confirmModalDesc').textContent = `"${m.name}" akan dihapus permanen.`;
+            pendingDeleteAction = () => {
+                appData.menus = appData.menus.filter(item => item.id !== id);
+                saveAppData();
+                showToast('Menu berhasil dihapus');
+            };
+            document.getElementById('confirmDeleteModal').classList.remove('hidden');
+        }
+
+        // ==================== ADMIN TOPPING CRUD ====================
+        function renderAdminToppings() {
+            const filterVal = document.getElementById('adminToppingFilter').value;
+            const list = (appData.toppings || []).filter(t => filterVal === 'all_filter' || t.target === filterVal);
+
+            const container = document.getElementById('adminToppingsList');
+            if (list.length === 0) {
+                container.innerHTML = '<p class="text-xs text-gray-500 py-6 text-center">Belum ada topping pada target ini.</p>';
+                return;
+            }
+
+            container.innerHTML = list.map(t => {
+                const avail = t.available !== false;
+                const targetText = TARGET_LABELS[t.target] || t.target;
+                return `
+                <div class="py-3.5 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                    <div class="min-w-0">
+                        <div class="flex flex-wrap items-center gap-2">
+                            <span class="font-bold text-sm text-jebew-black">${t.name}</span>
+                            <span class="px-2.5 py-0.5 rounded-full text-[11px] font-extrabold bg-jebew-cream text-jebew-orange">${targetText}</span>
+                            <span class="px-2 py-0.5 rounded-full text-[11px] font-extrabold ${avail ? 'bg-green-100 text-green-700' : 'bg-red-100 text-jebew-red'}">
+                                ${avail ? 'Tersedia' : 'Habis'}
+                            </span>
+                        </div>
+                        <p class="font-extrabold text-xs sm:text-sm text-jebew-red mt-1">${formatRupiah(t.price)}</p>
+                    </div>
+                    <div class="flex items-center gap-2 shrink-0">
+                        <button type="button" onclick="toggleToppingStatus('${t.id}')" class="px-3 py-1.5 rounded-xl bg-gray-100 hover:bg-gray-200 text-gray-700 text-xs font-bold">
+                            ${avail ? 'Set Habis' : 'Tersedia'}
+                        </button>
+                        <button type="button" onclick="editTopping('${t.id}')" class="px-3 py-1.5 rounded-xl bg-jebew-cream hover:bg-jebew-orange hover:text-white text-jebew-black text-xs font-bold">
+                            Edit
+                        </button>
+                        <button type="button" onclick="confirmDeleteTopping('${t.id}')" class="px-3 py-1.5 rounded-xl bg-red-50 hover:bg-jebew-red text-jebew-red hover:text-white text-xs font-bold">
+                            <i class="fa-solid fa-trash"></i>
+                        </button>
+                    </div>
+                </div>
+                `;
+            }).join('');
+        }
+
+        function handleSaveTopping(e) {
+            e.preventDefault();
+            const editId = document.getElementById('editToppingId').value;
+            const name = document.getElementById('toppingNameInput').value.trim();
+            const price = Number(document.getElementById('toppingPriceInput').value || 0);
+            const target = document.getElementById('toppingTargetInput').value;
+            const available = document.getElementById('toppingAvailableInput').value === 'true';
+
+            if (!name) return;
+
+            if (editId) {
+                const idx = appData.toppings.findIndex(t => t.id === editId);
+                if (idx > -1) {
+                    appData.toppings[idx] = { ...appData.toppings[idx], name, price, target, available };
+                }
+                showToast('Topping berhasil diperbarui!');
+            } else {
+                appData.toppings.push({
+                    id: 'tp_' + Date.now(),
+                    name,
+                    price,
+                    target,
+                    available
+                });
+                showToast('Topping baru ditambahkan!');
+            }
+
+            resetToppingForm();
+            saveAppData();
+        }
+
+        function editTopping(id) {
+            const t = appData.toppings.find(item => item.id === id);
+            if (!t) return;
+            document.getElementById('toppingFormHeading').textContent = `Edit Topping: ${t.name}`;
+            document.getElementById('editToppingId').value = t.id;
+            document.getElementById('toppingNameInput').value = t.name;
+            document.getElementById('toppingPriceInput').value = String(t.price || 0);
+            document.getElementById('toppingTargetInput').value = t.target || 'mie_jebew';
+            document.getElementById('toppingAvailableInput').value = String(t.available !== false);
+            document.getElementById('cancelEditToppingBtn').classList.remove('hidden');
+            document.getElementById('toppingNameInput').focus();
+        }
+
+        function resetToppingForm() {
+            document.getElementById('toppingFormHeading').textContent = 'Tambah / Edit Topping';
+            document.getElementById('editToppingId').value = '';
+            document.getElementById('toppingNameInput').value = '';
+            document.getElementById('toppingPriceInput').value = '';
+            document.getElementById('toppingTargetInput').value = 'mie_jebew';
+            document.getElementById('toppingAvailableInput').value = 'true';
+            document.getElementById('cancelEditToppingBtn').classList.add('hidden');
+        }
+
+        function toggleToppingStatus(id) {
+            const t = appData.toppings.find(item => item.id === id);
+            if (!t) return;
+            t.available = t.available === false ? true : false;
+            saveAppData();
+            showToast(`Status topping "${t.name}" diubah`);
+        }
+
+        function confirmDeleteTopping(id) {
+            const t = appData.toppings.find(item => item.id === id);
+            if (!t) return;
+            document.getElementById('confirmModalTitle').textContent = `Hapus topping "${t.name}"?`;
+            document.getElementById('confirmModalDesc').textContent = 'Topping akan dihapus permanen.';
+            pendingDeleteAction = () => {
+                appData.toppings = appData.toppings.filter(item => item.id !== id);
+                saveAppData();
+                showToast('Topping dihapus');
+            };
+            document.getElementById('confirmDeleteModal').classList.remove('hidden');
+        }
+
+        // ==================== ADMIN CATEGORY CRUD ====================
+        function renderAdminCategories() {
+            document.getElementById('adminCategoryList').innerHTML = appData.categories.map(cat => {
+                const count = appData.menus.filter(m => m.category === cat).length;
+                const escaped = cat.replace(/\\/g, '\\\\').replace(/'/g, "\\'");
+                return `
+                <div class="py-3 flex items-center justify-between">
+                    <div>
+                        <p class="font-bold text-sm text-jebew-black">${cat}</p>
+                        <p class="text-xs text-gray-500">${count} menu</p>
+                    </div>
+                    <button type="button" onclick="deleteCategory('${escaped}')" class="px-3 py-1.5 rounded-xl bg-red-50 hover:bg-jebew-red text-jebew-red hover:text-white text-xs font-bold transition-colors">
+                        Hapus
+                    </button>
+                </div>
+                `;
+            }).join('');
+        }
+
+        function handleAddCategory(e) {
+            e.preventDefault();
+            const val = document.getElementById('newCategoryInput').value.trim();
+            if (!val) return;
+            if (appData.categories.some(c => c.toLowerCase() === val.toLowerCase())) {
+                showToast('Kategori sudah ada!', 'error');
+                return;
+            }
+            appData.categories.push(val);
+            document.getElementById('newCategoryInput').value = '';
+            saveAppData();
+            showToast(`Kategori "${val}" ditambahkan`);
+        }
+
+        function deleteCategory(cat) {
+            if (appData.categories.length <= 1) {
+                showToast('Minimal harus ada 1 kategori!', 'error');
+                return;
+            }
+            document.getElementById('confirmModalTitle').textContent = `Hapus kategori "${cat}"?`;
+            document.getElementById('confirmModalDesc').textContent = 'Kategori akan dihapus dari filter.';
+            pendingDeleteAction = () => {
+                appData.categories = appData.categories.filter(c => c !== cat);
+                saveAppData();
+                showToast(`Kategori "${cat}" dihapus`);
+            };
+            document.getElementById('confirmDeleteModal').classList.remove('hidden');
+        }
+
+        // ==================== ADMIN PROMO ====================
+        function loadPromoForm() {
+            document.getElementById('promoActiveToggle').checked = Boolean(appData.promo.active);
+            document.getElementById('promoStatusLabel').textContent = appData.promo.active ? 'AKTIF' : 'NONAKTIF';
+            document.getElementById('promoBadgeInput').value = appData.promo.badge || '';
+            document.getElementById('promoTitleInput').value = appData.promo.title || '';
+            document.getElementById('promoDescInput').value = appData.promo.description || '';
+        }
+
+        document.getElementById('promoActiveToggle').addEventListener('change', function() {
+            document.getElementById('promoStatusLabel').textContent = this.checked ? 'AKTIF' : 'NONAKTIF';
+        });
+
+        function handleSavePromo(e) {
+            e.preventDefault();
+            appData.promo = {
+                active: document.getElementById('promoActiveToggle').checked,
+                badge: document.getElementById('promoBadgeInput').value.trim(),
+                title: document.getElementById('promoTitleInput').value.trim(),
+                description: document.getElementById('promoDescInput').value.trim()
+            };
+            saveAppData();
+            showToast('Promo berhasil disimpan!');
+        }
+
+        // ==================== ADMIN TESTIMONIAL CRUD ====================
+        function renderAdminTestimonials() {
+            document.getElementById('adminTestimonialsList').innerHTML = appData.testimonials.map(t => {
+                const stars = Math.min(5, Math.max(1, Number(t.rating || 5)));
+                return `
+                <div class="bg-white p-4 rounded-3xl shadow-sm border border-gray-200 flex flex-col justify-between space-y-3">
+                    <div>
+                        <div class="flex items-center justify-between gap-2">
+                            <p class="font-heading font-bold text-base text-jebew-black">${t.name}</p>
+                            <span class="text-xs font-extrabold text-yellow-500">⭐ ${stars}.0</span>
+                        </div>
+                        <p class="text-[11px] text-gray-500 font-semibold">${t.role || ''}</p>
+                        <p class="text-xs sm:text-sm text-gray-600 mt-2 italic">"${t.text}"</p>
+                    </div>
+                    <div class="flex gap-2 pt-2 border-t border-gray-100">
+                        <button type="button" onclick="editTestimonial('${t.id}')" class="px-3 py-1.5 rounded-xl bg-jebew-cream text-jebew-black hover:bg-jebew-orange hover:text-white text-xs font-bold">Edit</button>
+                        <button type="button" onclick="deleteTestimonial('${t.id}')" class="px-3 py-1.5 rounded-xl bg-red-50 text-jebew-red hover:bg-jebew-red hover:text-white text-xs font-bold">Hapus</button>
+                    </div>
+                </div>
+                `;
+            }).join('');
+        }
+
+        function handleSaveTestimonial(e) {
+            e.preventDefault();
+            const editId = document.getElementById('editTestiId').value;
+            const name = document.getElementById('testiNameInput').value.trim();
+            const role = document.getElementById('testiRoleInput').value.trim();
+            const rating = Number(document.getElementById('testiRatingInput').value || 5);
+            const text = document.getElementById('testiTextInput').value.trim();
+
+            if (editId) {
+                const idx = appData.testimonials.findIndex(t => t.id === editId);
+                if (idx > -1) {
+                    appData.testimonials[idx] = { ...appData.testimonials[idx], name, role, rating, text };
+                }
+                showToast('Testimoni diperbarui!');
+            } else {
+                appData.testimonials.unshift({
+                    id: 'rev_' + Date.now(),
+                    name,
+                    role,
+                    rating,
+                    text,
+                    avatar: `https://ui-avatars.com/api/?name=${encodeURIComponent(name)}&background=D92B2B&color=fff`
+                });
+                showToast('Testimoni ditambahkan!');
+            }
+            resetTestiForm();
+            saveAppData();
+        }
+
+        function editTestimonial(id) {
+            const t = appData.testimonials.find(item => item.id === id);
+            if (!t) return;
+            document.getElementById('testiFormHeading').textContent = 'Edit Testimoni';
+            document.getElementById('editTestiId').value = t.id;
+            document.getElementById('testiNameInput').value = t.name;
+            document.getElementById('testiRoleInput').value = t.role || '';
+            document.getElementById('testiRatingInput').value = String(t.rating || 5);
+            document.getElementById('testiTextInput').value = t.text;
+            document.getElementById('cancelEditTestiBtn').classList.remove('hidden');
+        }
+
+        function resetTestiForm() {
+            document.getElementById('testiFormHeading').textContent = 'Tambah / Edit Testimoni Pelanggan';
+            document.getElementById('editTestiId').value = '';
+            document.getElementById('testiNameInput').value = '';
+            document.getElementById('testiRoleInput').value = '';
+            document.getElementById('testiRatingInput').value = '5';
+            document.getElementById('testiTextInput').value = '';
+            document.getElementById('cancelEditTestiBtn').classList.add('hidden');
+        }
+
+        function deleteTestimonial(id) {
+            document.getElementById('confirmModalTitle').textContent = 'Hapus testimoni ini?';
+            document.getElementById('confirmModalDesc').textContent = 'Ulasan akan dihapus dari halaman pembeli.';
+            pendingDeleteAction = () => {
+                appData.testimonials = appData.testimonials.filter(t => t.id !== id);
+                saveAppData();
+                showToast('Testimoni dihapus');
+            };
+            document.getElementById('confirmDeleteModal').classList.remove('hidden');
+        }
+
+        // ==================== ADMIN SETTINGS ====================
+        function loadSettingsForms() {
+            const info = appData.warungInfo;
+            document.getElementById('setWarungName').value = info.name;
+            document.getElementById('setWarungAddress').value = info.address;
+            document.getElementById('setWarungHours').value = info.hours;
+            document.getElementById('setWarungWa').value = info.whatsapp;
+            document.getElementById('setWarungSocial').value = info.social;
+            document.getElementById('setWarungMaps').value = info.mapsUrl;
+
+            document.getElementById('setAdminUser').value = appData.adminAuth.username;
+            document.getElementById('setAdminPass').value = appData.adminAuth.password;
+        }
+
+        function handleSaveWarungInfo(e) {
+            e.preventDefault();
+            appData.warungInfo = {
+                name: document.getElementById('setWarungName').value.trim(),
+                address: document.getElementById('setWarungAddress').value.trim(),
+                hours: document.getElementById('setWarungHours').value.trim(),
+                whatsapp: document.getElementById('setWarungWa').value.trim(),
+                social: document.getElementById('setWarungSocial').value.trim(),
+                mapsUrl: document.getElementById('setWarungMaps').value.trim()
+            };
+            saveAppData();
+            showToast('Info warung berhasil disimpan!');
+        }
+
+        function handleSaveCredentials(e) {
+            e.preventDefault();
+            const u = document.getElementById('setAdminUser').value.trim();
+            const p = document.getElementById('setAdminPass').value.trim();
+            if (!u || !p) return;
+            appData.adminAuth = { username: u, password: p };
+            saveAppData();
+            showToast('Username & Password Admin diperbarui!');
+        }
+
+        // ==================== CONFIRM MODAL HANDLER ====================
+        document.getElementById('confirmDeleteBtn').addEventListener('click', () => {
+            if (typeof pendingDeleteAction === 'function') {
+                pendingDeleteAction();
+            }
+            closeConfirmModal();
+        });
+
+        function closeConfirmModal() {
+            document.getElementById('confirmDeleteModal').classList.add('hidden');
+            pendingDeleteAction = null;
+        }
+
+        // ==================== BOOT ====================
+        window.addEventListener('DOMContentLoaded', () => {
+            document.getElementById('currentYear').textContent = String(new Date().getFullYear());
+            syncAllViews();
+
+            if (appData.promo && appData.promo.active) {
+                setTimeout(() => {
+                    openPromoPopup();
+                }, 650);
+            }
+        });
+    </script>
+</body>
+</html>
